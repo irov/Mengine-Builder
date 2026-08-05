@@ -1,0 +1,53 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  unit:
+    name: ${{ matrix.os }} / Python ${{ matrix.python }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-2022, macos-15]
+        python: ["3.11", "3.12", "3.13", "3.14"]
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+      - run: python -m pip install -r requirements.txt
+      - run: python -m unittest discover -s tests -v
+
+  source-audit:
+    name: Source-only repository audit
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Reject native binaries and game launch files
+        shell: bash
+        run: |
+          set -euo pipefail
+          forbidden=$(git ls-files | grep -Ei '\.(exe|dll|dylib|pdb|dsym|bat)$' || true)
+          if [[ -n "${forbidden}" ]]; then
+            echo "Forbidden tracked files:"
+            echo "${forbidden}"
+            exit 1
+          fi
+          json=$(git ls-files '*.json' | grep -v '^tools-manifest\.json$' || true)
+          if [[ -n "${json}" ]]; then
+            echo "Unexpected tracked JSON files:"
+            echo "${json}"
+            exit 1
+          fi

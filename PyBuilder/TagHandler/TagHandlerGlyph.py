@@ -1,0 +1,22 @@
+from PyBuilder.Error.ErrorHandler import ErrorHandler
+
+from PyBuilder.TagHandler.TagHandlerFile import TagHandlerFile
+
+from PyBuilder.Operation.OperationManager import OperationManager
+
+class TagHandlerGlyph(TagHandlerFile):
+    def _onExecute(self):
+        if self.node.hasAttribute("Path") is False:
+            ErrorHandler.warning("not set Path [%s]", self.__repr__())
+            return False
+            pass
+
+        Path = self.node.getAttribute("Path")
+
+        with OperationManager.runOperationChain() as oc:
+            oc.addOperation("CopyGlyphs", Path=Path, fileSystemCursor=self.fileSystemCursor)
+            pass
+
+        return oc.isSuccess()
+        pass
+    pass

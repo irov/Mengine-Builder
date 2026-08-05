@@ -1,0 +1,197 @@
+{
+  "schema_version": 1,
+  "packages": {
+    "mengine-tools": {
+      "version": "tools-v1.0.0",
+      "platforms": {
+        "windows-x64": {
+          "url": "https://github.com/irov/Mengine/releases/download/tools-v1.0.0/mengine-tools-windows-x64.zip",
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "archive": "zip",
+          "files": [
+            "AlphaPremultiplier.exe",
+            "AlphaSpreading.exe",
+            "AstralaxCompiler.exe",
+            "ExtractorDXT1.exe",
+            "ExtractorETC1.exe",
+            "ImagePolygonize.exe",
+            "ImageTrimmer.exe",
+            "MengineConverter.exe",
+            "Metawrite.exe",
+            "MovieResource.exe",
+            "NodeDebugger.exe",
+            "Ravinggen.exe",
+            "TexturePacker.exe"
+          ],
+          "executables": []
+        },
+        "macos-arm64": {
+          "url": "https://github.com/irov/Mengine/releases/download/tools-v1.0.0/mengine-tools-macos-arm64.tar.gz",
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "archive": "tar.gz",
+          "files": [
+            "AlphaPremultiplier",
+            "AlphaSpreading",
+            "AstralaxCompiler",
+            "ExtractorDXT1",
+            "ExtractorETC1",
+            "ImagePolygonize",
+            "ImageTrimmer",
+            "MengineConverter",
+            "Metawrite",
+            "MovieResource",
+            "NodeDebugger",
+            "Ravinggen",
+            "TexturePacker"
+          ],
+          "executables": [
+            "AlphaPremultiplier",
+            "AlphaSpreading",
+            "AstralaxCompiler",
+            "ExtractorDXT1",
+            "ExtractorETC1",
+            "ImagePolygonize",
+            "ImageTrimmer",
+            "MengineConverter",
+            "Metawrite",
+            "MovieResource",
+            "NodeDebugger",
+            "Ravinggen",
+            "TexturePacker"
+          ]
+        }
+      }
+    },
+    "ffmpeg": {
+      "version": "dependencies-v1.0.0",
+      "platforms": {
+        "windows-x64": {
+          "url": "https://github.com/irov/Mengine-Builder/releases/download/dependencies-v1.0.0/ffmpeg-windows-x64.zip",
+          "sha256": "4b8192e2ce870993ddf577b0833ac2f5f5d469fe7768f97e47210a98b795b3f1",
+          "archive": "zip",
+          "files": ["ffmpeg.exe", "ffprobe.exe", "LICENSES/FFmpeg.txt", "provenance.json"],
+          "executables": []
+        },
+        "macos-arm64": {
+          "url": "https://github.com/irov/Mengine-Builder/releases/download/dependencies-v1.0.0/ffmpeg-macos-arm64.tar.gz",
+          "sha256": "b66a9678a20fc9b8a12034cc258f6776e7b7c622f8166cf040381397ec43f812",
+          "archive": "tar.gz",
+          "files": ["ffmpeg", "ffprobe", "lib/libavcodec.62.28.102.dylib", "LICENSES/FFmpeg.txt", "provenance.json"],
+          "executables": ["ffmpeg", "ffprobe"]
+        }
+      }
+    },
+    "webp": {
+      "version": "dependencies-v1.0.0",
+      "platforms": {
+        "windows-x64": {
+          "url": "https://github.com/irov/Mengine-Builder/releases/download/dependencies-v1.0.0/webp-windows-x64.zip",
+          "sha256": "6eeb8f4f25e3f196a23ba4e888ec99b59179a1ae32aedebd3d2dbd57075d9e9d",
+          "archive": "zip",
+          "files": ["cwebp.exe", "LICENSES/WebP.txt", "provenance.json"],
+          "executables": []
+        },
+        "macos-arm64": {
+          "url": "https://github.com/irov/Mengine-Builder/releases/download/dependencies-v1.0.0/webp-macos-arm64.tar.gz",
+          "sha256": "1dcb634c392d9c89ee8bc6629e4fdcf3cb7f7504089fb36975fecc8aa0b52045",
+          "archive": "tar.gz",
+          "files": ["cwebp", "lib/libwebp.7.2.0.dylib", "LICENSES/WebP.txt", "provenance.json"],
+          "executables": ["cwebp"]
+        }
+      }
+    },
+    "crunch": {
+      "version": "dependencies-v1.0.0",
+      "platforms": {
+        "windows-x64": {
+          "url": "https://github.com/irov/Mengine-Builder/releases/download/dependencies-v1.0.0/crunch-windows-x64.zip",
+          "sha256": "df1ef4c31ce4f529686350234bbe5234b539b682a80953841bb904422dfc73c9",
+          "archive": "zip",
+          "files": ["crunch_x64.exe", "LICENSES/crunch.txt", "provenance.json"],
+          "executables": []
+        },
+        "macos-arm64": {
+          "url": "https://github.com/irov/Mengine-Builder/releases/download/dependencies-v1.0.0/crunch-macos-arm64.tar.gz",
+          "sha256": "dc0cd76da8d2d17cca3938bdb157d92e36d0a922ee9f8dae05af9200e3601c1d",
+          "archive": "tar.gz",
+          "files": ["crunch", "LICENSES/crunch.txt", "provenance.json"],
+          "executables": ["crunch"]
+        }
+      }
+    },
+    "yamdi": {
+      "version": "dependencies-v1.0.0",
+      "platforms": {
+        "windows-x64": {
+          "url": "https://github.com/irov/Mengine-Builder/releases/download/dependencies-v1.0.0/yamdi-windows-x64.zip",
+          "sha256": "46729e5670ed26e282d1437dd6b97293e0884c8edb1ef17d02e8f24c28990a6c",
+          "archive": "zip",
+          "files": ["yamdi.exe", "LICENSES/yamdi.txt", "provenance.json"],
+          "executables": []
+        },
+        "macos-arm64": {
+          "url": "https://github.com/irov/Mengine-Builder/releases/download/dependencies-v1.0.0/yamdi-macos-arm64.tar.gz",
+          "sha256": "9e6c02487bd6d724653c7df0496e357dd398c64c93ac30829c8590a557685efa",
+          "archive": "tar.gz",
+          "files": ["yamdi", "LICENSES/yamdi.txt", "provenance.json"],
+          "executables": ["yamdi"]
+        }
+      }
+    },
+    "python27-macos": {
+      "version": "dependencies-v1.0.0",
+      "platforms": {
+        "macos-arm64": {
+          "url": "https://github.com/irov/Mengine-Builder/releases/download/dependencies-v1.0.0/python27-macos-arm64.tar.gz",
+          "sha256": "68c43760dd4dffe61ff7944e9f8954cf61f1d0ff129418d63376c1fe964355f4",
+          "archive": "tar.gz",
+          "files": ["bin/python2.7", "lib/libpython2.7.dylib", "LICENSES/Python-2.7.txt", "provenance.json"],
+          "executables": ["bin/python2.7"]
+        }
+      }
+    },
+    "resource-hacker": {
+      "version": "5.2.8",
+      "platforms": {
+        "windows-x64": {
+          "url": "https://resourcehacker.net/resource_hacker.zip",
+          "sha256": "52f81ee4778070d6aa72d8719a1a68fea2f288005deb02667542754f747776f8",
+          "archive": "zip",
+          "files": ["ResourceHacker.exe"],
+          "executables": []
+        }
+      }
+    }
+  },
+  "tools": {
+    "AlphaPremultiplier": {"windows-x64": {"kind": "managed", "package": "mengine-tools", "path": "AlphaPremultiplier.exe"}, "macos-arm64": {"kind": "managed", "package": "mengine-tools", "path": "AlphaPremultiplier"}},
+    "AlphaSpreading": {"windows-x64": {"kind": "managed", "package": "mengine-tools", "path": "AlphaSpreading.exe"}, "macos-arm64": {"kind": "managed", "package": "mengine-tools", "path": "AlphaSpreading"}},
+    "AstralaxCompiler": {"windows-x64": {"kind": "managed", "package": "mengine-tools", "path": "AstralaxCompiler.exe"}, "macos-arm64": {"kind": "managed", "package": "mengine-tools", "path": "AstralaxCompiler"}},
+    "AstralaxRuntime": {
+      "windows-x64": {"kind": "external", "package": "astralax", "version": "v1.0.0", "path": "astralax.dll", "sha256": "ea9f883bbf5c55040139ee921cd0255a24dac1966d6623ccbfb67c39b944c440"},
+      "macos-arm64": {"kind": "external", "package": "astralax", "version": "v1.0.0", "path": "libastralax.dylib", "sha256": "9339f9ba9caaeac9c01aa561ce5ca5996d40381a19c0969726fdeed7d6be416a"}
+    },
+    "ExtractorDXT1": {"windows-x64": {"kind": "managed", "package": "mengine-tools", "path": "ExtractorDXT1.exe"}, "macos-arm64": {"kind": "managed", "package": "mengine-tools", "path": "ExtractorDXT1"}},
+    "ExtractorETC1": {"windows-x64": {"kind": "managed", "package": "mengine-tools", "path": "ExtractorETC1.exe"}, "macos-arm64": {"kind": "managed", "package": "mengine-tools", "path": "ExtractorETC1"}},
+    "ImagePolygonize": {"windows-x64": {"kind": "managed", "package": "mengine-tools", "path": "ImagePolygonize.exe"}, "macos-arm64": {"kind": "managed", "package": "mengine-tools", "path": "ImagePolygonize"}},
+    "ImageTrimmer": {"windows-x64": {"kind": "managed", "package": "mengine-tools", "path": "ImageTrimmer.exe"}, "macos-arm64": {"kind": "managed", "package": "mengine-tools", "path": "ImageTrimmer"}},
+    "MengineConverter": {"windows-x64": {"kind": "managed", "package": "mengine-tools", "path": "MengineConverter.exe"}, "macos-arm64": {"kind": "managed", "package": "mengine-tools", "path": "MengineConverter"}},
+    "Metawrite": {"windows-x64": {"kind": "managed", "package": "mengine-tools", "path": "Metawrite.exe"}, "macos-arm64": {"kind": "managed", "package": "mengine-tools", "path": "Metawrite"}},
+    "MovieResource": {"windows-x64": {"kind": "managed", "package": "mengine-tools", "path": "MovieResource.exe"}, "macos-arm64": {"kind": "managed", "package": "mengine-tools", "path": "MovieResource"}},
+    "NodeDebugger": {"windows-x64": {"kind": "managed", "package": "mengine-tools", "path": "NodeDebugger.exe"}, "macos-arm64": {"kind": "managed", "package": "mengine-tools", "path": "NodeDebugger"}},
+    "Ravinggen": {"windows-x64": {"kind": "managed", "package": "mengine-tools", "path": "Ravinggen.exe"}, "macos-arm64": {"kind": "managed", "package": "mengine-tools", "path": "Ravinggen"}},
+    "TexturePacker": {"windows-x64": {"kind": "managed", "package": "mengine-tools", "path": "TexturePacker.exe"}, "macos-arm64": {"kind": "managed", "package": "mengine-tools", "path": "TexturePacker"}},
+    "ffmpeg": {"windows-x64": {"kind": "managed", "package": "ffmpeg", "path": "ffmpeg.exe"}, "macos-arm64": {"kind": "managed", "package": "ffmpeg", "path": "ffmpeg"}},
+    "ffprobe": {"windows-x64": {"kind": "managed", "package": "ffmpeg", "path": "ffprobe.exe"}, "macos-arm64": {"kind": "managed", "package": "ffmpeg", "path": "ffprobe"}},
+    "cwebp": {"windows-x64": {"kind": "managed", "package": "webp", "path": "cwebp.exe"}, "macos-arm64": {"kind": "managed", "package": "webp", "path": "cwebp"}},
+    "crunch": {"windows-x64": {"kind": "managed", "package": "crunch", "path": "crunch_x64.exe"}, "macos-arm64": {"kind": "managed", "package": "crunch", "path": "crunch"}},
+    "yamdi": {"windows-x64": {"kind": "managed", "package": "yamdi", "path": "yamdi.exe"}, "macos-arm64": {"kind": "managed", "package": "yamdi", "path": "yamdi"}},
+    "python2.7": {"macos-arm64": {"kind": "managed", "package": "python27-macos", "path": "bin/python2.7"}},
+    "ResourceHacker": {"windows-x64": {"kind": "managed", "package": "resource-hacker", "path": "ResourceHacker.exe"}},
+    "rc": {"windows-x64": {"kind": "system", "resolver": "windows_sdk", "candidates": ["rc.exe"], "hint": "install the Windows 10/11 SDK (Desktop C++ tools) or set MENGINE_BUILDER_TOOL_RC"}},
+    "PVRTexToolCLI": {
+      "windows-x64": {"kind": "system", "candidates": ["PVRTexToolCLI.exe"], "hint": "install Imagination PowerVR SDK and add PVRTexToolCLI.exe to PATH, or set MENGINE_BUILDER_TOOL_PVRTEXTOOLCLI"},
+      "macos-arm64": {"kind": "system", "candidates": ["PVRTexToolCLI"], "hint": "install Imagination PowerVR SDK and add PVRTexToolCLI to PATH, or set MENGINE_BUILDER_TOOL_PVRTEXTOOLCLI"}
+    }
+  }
+}

@@ -1,0 +1,35 @@
+# Managed downloads and licensed local runtimes
+.cache/
+.local-tools/
+
+# Python bytecode and tool caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+
+# Python environments and packaging output
+.venv/
+venv/
+build/
+dist/
+*.egg-info/
+
+# Coverage output
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
+# Operating systems and editors
+.DS_Store
+Thumbs.db
+Desktop.ini
+.idea/
+.vscode/
+*.code-workspace
+*.swp
+*~
