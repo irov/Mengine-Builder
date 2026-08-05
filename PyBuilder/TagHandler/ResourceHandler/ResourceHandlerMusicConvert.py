@@ -3,7 +3,7 @@ from PyBuilder.TagHandler.ResourceHandler.ResourceHandler import ResourceHandler
 from PyBuilder.FileSystem import FileSystem
 from PyBuilder.Operation.OperationManager import OperationManager
 
-import ToolsBuilderPlugin
+from PyBuilder import Tools
 
 class ResourceHandlerMusicConvert(ResourceHandler):
     def convertFFMPEG(self, fileNode, ext, operation, codec, **params):
@@ -27,7 +27,7 @@ class ResourceHandlerMusicConvert(ResourceHandler):
             destination = self.fileSystemCursor.getFileExportPath(pathConvert)
             pass
         else:
-            pathConvert = "StoreMusic/" + ToolsBuilderPlugin.pathSHA1(source) + "." + ext
+            pathConvert = "StoreMusic/" + Tools.pathSHA1(source) + "." + ext
 
             destination = self.fileSystemCursor.getFileDestinationPath(pathConvert)
             pass

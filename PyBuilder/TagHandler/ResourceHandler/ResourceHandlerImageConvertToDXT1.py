@@ -4,7 +4,7 @@ from PyBuilder.Operation.OperationManager import OperationManager
 
 from PyBuilder.Environment import Environment
 
-import ToolsBuilderPlugin
+from PyBuilder import Tools
 
 #attach this to  "ResourceImageDefault" or checkAttributeType == "ResourceImageInAtlasCombineRGBAndAlpha"
 class ResourceHandlerImageConvertToDXT1(ResourceHandlerImageConvert):

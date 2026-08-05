@@ -11,7 +11,7 @@ from unittest import mock
 from PIL import Image
 
 import ProjectBuilder
-import ToolsBuilderPlugin
+from PyBuilder import Tools
 from PyBuilder.ConfigLoader import ConfigArgumentError, load_build_config, parse_new_variables
 from PyBuilder.FileSystem import FileSystem
 from PyBuilder.Graph.GraphNodeJson import GraphNodeJson
@@ -117,26 +117,26 @@ class ToolchainTests(unittest.TestCase):
 
 class ImageFacadeTests(unittest.TestCase):
     def test_create_put_get_rotate_and_split(self):
-        image = ToolsBuilderPlugin.createImage(2, 1, 4, (0, 0, 0, 0))
-        self.assertTrue(ToolsBuilderPlugin.putImageData(image, [[255, 0, 0, 255], [0, 255, 0, 128]]))
-        self.assertEqual(ToolsBuilderPlugin.getImageData(image), [[255, 0, 0, 255], [0, 255, 0, 128]])
+        image = Tools.createImage(2, 1, 4, (0, 0, 0, 0))
+        self.assertTrue(Tools.putImageData(image, [[255, 0, 0, 255], [0, 255, 0, 128]]))
+        self.assertEqual(Tools.getImageData(image), [[255, 0, 0, 255], [0, 255, 0, 128]])
 
-        rotated = ToolsBuilderPlugin.rotateImage(image, -90)
+        rotated = Tools.rotateImage(image, -90)
         self.assertEqual((rotated.width, rotated.height), (1, 2))
 
-        rgb, alpha = ToolsBuilderPlugin.splitImage(image)
+        rgb, alpha = Tools.splitImage(image)
         self.assertEqual(rgb.mode, "RGB")
-        self.assertEqual([pixel[0] for pixel in ToolsBuilderPlugin.getImageData(alpha)], [255, 128])
+        self.assertEqual([pixel[0] for pixel in Tools.getImageData(alpha)], [255, 128])
 
     def test_image_file_queries_and_sha1(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "image.png"
             Image.new("RGBA", (4, 4), (10, 20, 30, 255)).save(path)
 
-            self.assertTrue(ToolsBuilderPlugin.isAlphaInImageFile(path))
-            self.assertTrue(ToolsBuilderPlugin.isUselessAlphaInImageFile(path))
-            self.assertTrue(ToolsBuilderPlugin.isPow2SquadImageFile(path))
-            self.assertEqual(ToolsBuilderPlugin.pathSHA1(path), hashlib.sha1(path.read_bytes()).hexdigest())
+            self.assertTrue(Tools.isAlphaInImageFile(path))
+            self.assertTrue(Tools.isUselessAlphaInImageFile(path))
+            self.assertTrue(Tools.isPow2SquadImageFile(path))
+            self.assertEqual(Tools.pathSHA1(path), hashlib.sha1(path.read_bytes()).hexdigest())
 
     def test_astralax_atlas_files_use_external_runtime(self):
         runtime = Path("/licensed/libastralax.dylib")
@@ -152,10 +152,10 @@ class ImageFacadeTests(unittest.TestCase):
             )
             return True
 
-        with mock.patch("ToolsBuilderPlugin.tool_path", return_value=runtime), mock.patch(
-            "ToolsBuilderPlugin._run_native", side_effect=run_native
+        with mock.patch.object(Tools, "tool_path", return_value=runtime), mock.patch.object(
+            Tools, "_run_native", side_effect=run_native
         ):
-            atlases = ToolsBuilderPlugin.magicParticlesAtlasFiles("particle.ptc")
+            atlases = Tools.magicParticlesAtlasFiles("particle.ptc")
 
         self.assertEqual(atlases, ["Atlas/smoke.webp", "Atlas/fire.webp"])
 

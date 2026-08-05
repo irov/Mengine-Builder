@@ -4,7 +4,7 @@ from PyBuilder.Operation.OperationManager import OperationManager
 
 from PyBuilder.Environment import Environment
 
-import ToolsBuilderPlugin
+from PyBuilder import Tools
 
 class ResourceHandlerImageConvertToWEBPAndETC1(ResourceHandlerImageConvert):
     def _proccesWEBP(self, fullPath, fileNode, NoAtlas, IsAtlas, Alpha):
@@ -87,13 +87,13 @@ class ResourceHandlerImageConvertToWEBPAndETC1(ResourceHandlerImageConvert):
         pass
 
     def _process(self, fullPath, fileNode, NoAtlas, IsAtlas):
-        if ToolsBuilderPlugin.isUselessAlphaInImageFile(fullPath) is False:
+        if Tools.isUselessAlphaInImageFile(fullPath) is False:
             if self._proccesWEBP(fullPath, fileNode, NoAtlas, IsAtlas, True) is False:
                 return False
                 pass
             pass
         else:
-            if ToolsBuilderPlugin.isPow2SquadImageFile(fullPath) is True:
+            if Tools.isPow2SquadImageFile(fullPath) is True:
                 if self._proccesETC1(fullPath, fileNode, NoAtlas, IsAtlas) is False:
                     return False
                     pass

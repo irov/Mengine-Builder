@@ -1,4 +1,4 @@
-import ToolsBuilderPlugin
+from PyBuilder import Tools
 
 from PyBuilder.Operation.Operation import Operation
 from PyBuilder.Error.ErrorHandler import ErrorHandler
@@ -22,16 +22,16 @@ class OperationSplitImageOnRGBAndAlpha(Operation):
         dirName = FileSystem.getDirname(self.destinationPathAlpha)
         FileSystem.makeDirsRecursiveIfNotExist(dirName)
 
-        img = ToolsBuilderPlugin.loadImage(self.sourcePath)
+        img = Tools.loadImage(self.sourcePath)
 
         imageRgb, imageAlpha = img.split()
 
-        if ToolsBuilderPlugin.saveImage(imageRgb, self.destinationPathRGB) is False:
+        if Tools.saveImage(imageRgb, self.destinationPathRGB) is False:
             ErrorHandler.warning("invalid save image RGB [%s] source [%s] destination [%s]", self.__repr__(), self.sourcePath, self.destinationPathRGB)
             return False
             pass
 
-        if ToolsBuilderPlugin.saveImage(imageAlpha, self.destinationPathAlpha) is False:
+        if Tools.saveImage(imageAlpha, self.destinationPathAlpha) is False:
             ErrorHandler.warning("invalid save image Alpha [%s] source [%s] destination [%s]", self.__repr__(),
                                  self.sourcePath, self.destinationPathAlpha)
             return False

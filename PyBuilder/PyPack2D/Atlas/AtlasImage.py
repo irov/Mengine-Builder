@@ -3,7 +3,7 @@ __author__ = 'human88998999877'
 from PyBuilder.PyPack2D.Packing2D import BorderType
 from PyBuilder.PyPack2D.Atlas.BorderDraw import BorderDrawEdge, BorderDrawRectangle
 
-import ToolsBuilderPlugin
+from PyBuilder import Tools
 class AtlasImage(object):
     def __init__(self, path = None, img = None):
         super(AtlasImage, self).__init__()
@@ -20,7 +20,7 @@ class AtlasImage(object):
         pass
 
     def _initFromFilename(self, path):
-        openImage = ToolsBuilderPlugin.loadImage(path)
+        openImage = Tools.loadImage(path)
 
         if openImage is None:
             raise IOError()
@@ -44,8 +44,8 @@ class AtlasImage(object):
         pass
 
     def _initialise(self):
-        self.width = ToolsBuilderPlugin.getImageWidth(self.img)
-        self.height = ToolsBuilderPlugin.getImageHeight(self.img)
+        self.width = Tools.getImageWidth(self.img)
+        self.height = Tools.getImageHeight(self.img)
         pass
 
     def getImagePIL(self):
@@ -81,7 +81,7 @@ class AtlasImage(object):
         pass
 
     def rotate(self):
-        self.img = ToolsBuilderPlugin.rotateImage(self.img, -90)
+        self.img = Tools.rotateImage(self.img, -90)
 
         self._initialise()
         pass
@@ -117,7 +117,7 @@ class AtlasImage(object):
             raise BaseException("Atlas Image pack error. Bin not determined")
             pass
 
-        ToolsBuilderPlugin.pasteImage(canvas, self.img, self.bin.left, self.bin.top)
+        Tools.pasteImage(canvas, self.img, self.bin.left, self.bin.top)
 
         self._onPack(atlas)
         pass
@@ -137,7 +137,7 @@ class AtlasImage(object):
 
     def packEnd(self, atlas):
         self._onPackEnd(atlas)
-        ToolsBuilderPlugin.releaseImage(self.img)
+        Tools.releaseImage(self.img)
         self.img = None
         pass
 

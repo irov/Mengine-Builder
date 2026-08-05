@@ -3,7 +3,7 @@ from PyBuilder.Operation.Operation import Operation
 from PyBuilder.FileSystem import FileSystem
 from PyBuilder.Toolchain import tool_path
 
-import ToolsBuilderPlugin
+from PyBuilder import Tools
 
 class OperationConvertFFMPEGtoOGG(Operation):
     def _onParams(self, params):
@@ -23,7 +23,7 @@ class OperationConvertFFMPEGtoOGG(Operation):
         ffmpeg = tool_path("ffmpeg")
         aq = self.quality // 10
 
-        if ToolsBuilderPlugin.convert(self.sourcePath, self.destinationPath, "ffmpegToOggSound", dict(ffmpeg=ffmpeg, aq=aq)) is False:
+        if Tools.convert(self.sourcePath, self.destinationPath, "ffmpegToOggSound", dict(ffmpeg=ffmpeg, aq=aq)) is False:
             ErrorHandler.warning("invalid sound %s converting to %s", self.sourcePath, self.destinationPath)
             return False
             pass

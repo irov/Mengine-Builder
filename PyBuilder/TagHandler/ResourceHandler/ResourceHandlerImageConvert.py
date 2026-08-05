@@ -1,7 +1,7 @@
 from PyBuilder.TagHandler.ResourceHandler.ResourceHandler import ResourceHandler
 from PyBuilder.FileSystem import FileSystem
 
-import ToolsBuilderPlugin
+from PyBuilder import Tools
 
 class ResourceHandlerImageConvert(ResourceHandler):
     def _onExecute(self):
@@ -61,7 +61,7 @@ class ResourceHandlerImageConvert(ResourceHandler):
             NoAtlas = True
             pass
 
-        if ToolsBuilderPlugin.isAlphaInImageFile(fullPath) is True:
+        if Tools.isAlphaInImageFile(fullPath) is True:
             fileNode.setAttribute("Alpha", "1")
             pass
         else:
@@ -94,7 +94,7 @@ class ResourceHandlerImageConvert(ResourceHandler):
         pass
 
     def _process(self, fullPath, fileNode, NoAtlas, IsAtlas):
-        if ToolsBuilderPlugin.isUselessAlphaInImageFile(fullPath) is False:
+        if Tools.isUselessAlphaInImageFile(fullPath) is False:
             if self._proccesRGBA(fullPath, fileNode, NoAtlas, IsAtlas) is False:
                 return False
                 pass

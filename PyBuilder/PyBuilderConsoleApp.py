@@ -13,7 +13,7 @@ import PyBuilder.Constants as Constants
 from PyBuilder.FileSystem import FileSystem
 from PyBuilder.ConfigLoader import load_build_config
 
-import ToolsBuilderPlugin
+from PyBuilder import Tools
 
 import sys
 
@@ -24,7 +24,7 @@ class PyBuilderConsoleApp(object):
 
         class MyLogger:
             def write(self, message):
-                ToolsBuilderPlugin.log(message)
+                Tools.log(message)
 
             def flush(self):
                 pass

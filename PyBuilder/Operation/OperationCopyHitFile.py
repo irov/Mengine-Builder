@@ -1,4 +1,4 @@
-import ToolsBuilderPlugin
+from PyBuilder import Tools
 
 from PyBuilder.Operation.Operation import Operation
 from PyBuilder.FileSystem import FileSystem
@@ -13,7 +13,7 @@ class OperationCopyHitFile(Operation):
         dirname = FileSystem.getDirname(self.destinationPath)
         FileSystem.makeDirsRecursiveIfNotExist(dirname)
 
-        if ToolsBuilderPlugin.convert(self.sourcePath, self.destinationPath, "png2hit", {}) is False:
+        if Tools.convert(self.sourcePath, self.destinationPath, "png2hit", {}) is False:
             print("invalid hit %s converting to %s" % (self.sourcePath, self.destinationPath))
             return False
             pass

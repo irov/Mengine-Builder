@@ -1,7 +1,7 @@
 from PyBuilder.Operation.Operation import Operation
 from PyBuilder.FileSystem import FileSystem
 
-import ToolsBuilderPlugin
+from PyBuilder import Tools
 
 class OperationConvertImageToACF(Operation):
     def _getInfo(self):
@@ -18,7 +18,7 @@ class OperationConvertImageToACF(Operation):
         dirName = FileSystem.getDirname(self.destinationPath)
         FileSystem.makeDirsRecursiveIfNotExist(dirName)
 
-        if ToolsBuilderPlugin.convert(self.sourcePath, self.destinationPath, "png2acf", {}) is False:
+        if Tools.convert(self.sourcePath, self.destinationPath, "png2acf", {}) is False:
             print("invalid image %s converting to %s" % (self.sourcePath, self.destinationPath))
             return False
             pass

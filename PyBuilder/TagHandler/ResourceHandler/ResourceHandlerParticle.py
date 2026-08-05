@@ -3,7 +3,7 @@ from PyBuilder.FileSystem import FileSystem
 from PyBuilder.Error.ErrorHandler import ErrorHandler
 from PyBuilder.Operation.OperationManager import OperationManager
 
-import ToolsBuilderPlugin
+from PyBuilder import Tools
 
 class ResourceHandlerParticle(ResourceHandler):
     def _onExecute(self):
@@ -36,7 +36,7 @@ class ResourceHandlerParticle(ResourceHandler):
             fileNode.removeAttribute("Converter")
             pass
 
-        pathPTZ = "StoreParticle/" + ToolsBuilderPlugin.pathSHA1(source) + ".ptz"
+        pathPTZ = "StoreParticle/" + Tools.pathSHA1(source) + ".ptz"
 
         destination = self.fileSystemCursor.getFileDestinationPath(pathPTZ)
 
@@ -44,7 +44,7 @@ class ResourceHandlerParticle(ResourceHandler):
         FileSystem.makeDirsRecursiveIfNotExist(dirName)
 
         if converter != "":
-            if ToolsBuilderPlugin.convert(source, destination, converter, {}) is False:
+            if Tools.convert(source, destination, converter, {}) is False:
                 print("invalid particle %s converting to %s" % (source, destination))
 
                 return False

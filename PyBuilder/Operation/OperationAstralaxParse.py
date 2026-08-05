@@ -3,7 +3,7 @@ from PyBuilder.FileSystem import FileSystem
 
 from PyBuilder.Operation.OperationManager import OperationManager
 
-import ToolsBuilderPlugin
+from PyBuilder import Tools
 
 class OperationAstralaxParse(Operation):
     def _getInfo(self):
@@ -17,7 +17,7 @@ class OperationAstralaxParse(Operation):
 
     def _onRun(self):
         sourceDirName = FileSystem.getDirname(self.sourcePath)
-        atlasFiles = ToolsBuilderPlugin.magicParticlesAtlasFiles(self.sourcePath)
+        atlasFiles = Tools.magicParticlesAtlasFiles(self.sourcePath)
 
         if atlasFiles is None:
             return False

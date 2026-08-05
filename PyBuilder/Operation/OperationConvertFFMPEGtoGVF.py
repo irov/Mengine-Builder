@@ -3,7 +3,7 @@ from PyBuilder.Error.ErrorHandler import ErrorHandler
 from PyBuilder.FileSystem import FileSystem
 from PyBuilder.Toolchain import tool_path
 
-import ToolsBuilderPlugin
+from PyBuilder import Tools
 
 class OperationConvertFFMPEGtoGVF(Operation):
     def _onParams(self, params):
@@ -20,7 +20,7 @@ class OperationConvertFFMPEGtoGVF(Operation):
         FileSystem.makeDirsRecursiveIfNotExist(dirName)
 
         toolFile = tool_path("ffmpeg")
-        if ToolsBuilderPlugin.convert(self.sourcePath, self.destinationPath, "ffmpegToGVF", dict(ffmpeg=toolFile)) is False:
+        if Tools.convert(self.sourcePath, self.destinationPath, "ffmpegToGVF", dict(ffmpeg=toolFile)) is False:
             ErrorHandler.warning("invalid video %s converting to %s", self.sourcePath, self.destinationPath)
             return False
             pass

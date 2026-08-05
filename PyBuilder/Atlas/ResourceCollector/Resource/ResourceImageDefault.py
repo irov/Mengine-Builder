@@ -7,7 +7,7 @@ from PyBuilder.FileSystem import FileSystem
 from PyBuilder.Environment import Environment
 import PyBuilder.Constants as Constants
 
-import ToolsBuilderPlugin
+from PyBuilder import Tools
 
 class AtlasImagePyBuilder(AtlasImage):
     def __init__(self, path=None, img=None, onPackCallback=None, onPackCallbackEnd=None):
@@ -282,7 +282,7 @@ class ResourceImageDefault(Resource):
     def _ifAlpha(self, image):
         img = image.getImagePIL()
 
-        if ToolsBuilderPlugin.uselessalphaImage(img) is True:
+        if Tools.uselessalphaImage(img) is True:
             return "0"
             pass
 

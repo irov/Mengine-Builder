@@ -3,7 +3,7 @@ from PyBuilder.Constants import ERROR_REPORTING_SILENT,ERROR_REPORTING_VERBOSE,E
 from PyBuilder.Error.ErrorSet import FATAL_ERROR,ERROR,WARNING,MESSAGE,IMPORTANT_MESSAGE
 from PyBuilder.Error.ErrorSet import ERROR_SET_DEFAULT,ERROR_SET_VERBOSE,ERROR_SET_SILENT
 
-import ToolsBuilderPlugin
+from PyBuilder import Tools
 
 class ErrorHandler(object):
     errorLabels = {

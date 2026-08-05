@@ -3,7 +3,7 @@ from PyBuilder.Operation.Operation import Operation
 from PyBuilder.FileSystem import FileSystem
 from PyBuilder.Toolchain import tool_path
 
-import ToolsBuilderPlugin
+from PyBuilder import Tools
 
 class OperationConvertFFMPEGtoOGVA(Operation):
     def _onParams(self, params):
@@ -24,7 +24,7 @@ class OperationConvertFFMPEGtoOGVA(Operation):
         ffmpeg = tool_path("ffmpeg")
         quality = self.quality // 10
 
-        if ToolsBuilderPlugin.convert(self.sourcePath, self.destinationPath, "ffmpegToOGVA", dict(ffmpeg=ffmpeg, quality=quality, resize=self.resize)) is False:
+        if Tools.convert(self.sourcePath, self.destinationPath, "ffmpegToOGVA", dict(ffmpeg=ffmpeg, quality=quality, resize=self.resize)) is False:
             print("invalid video %s converting to %s" % (self.sourcePath, self.destinationPath))
             return False
             pass

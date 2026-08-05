@@ -2,7 +2,7 @@ from PyBuilder.TagHandler.ResourceHandler.ResourceHandler import ResourceHandler
 from PyBuilder.Error.ErrorHandler import ErrorHandler
 from PyBuilder.Operation.OperationManager import OperationManager
 
-import ToolsBuilderPlugin
+from PyBuilder import Tools
 
 class ResourceHandlerSoundConvertToOGG(ResourceHandler):
     def _onExecute(self):
@@ -20,7 +20,7 @@ class ResourceHandlerSoundConvertToOGG(ResourceHandler):
         if fileNode.hasAttribute("Converter") and fileNode.getAttribute("Converter") == "ffmpegToOggSound":
             source = self.fileSystemCursor.getFileSourcePath(path)
 
-            pathOGG = "StoreSound/" + ToolsBuilderPlugin.pathSHA1(source) + ".ogg"
+            pathOGG = "StoreSound/" + Tools.pathSHA1(source) + ".ogg"
 
             destination = self.fileSystemCursor.getFileDestinationPath(pathOGG)
 

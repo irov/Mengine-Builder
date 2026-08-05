@@ -1,4 +1,4 @@
-"""Pure Python compatibility facade for the former C++ ToolsBuilderPlugin."""
+"""Shared native-tool and image helpers for ProjectBuilder."""
 
 import hashlib
 import json

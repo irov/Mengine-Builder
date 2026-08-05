@@ -6,7 +6,7 @@ from PIL import Image
 
 from PyBuilder.OSSystem import OSSystem
 
-import ToolsBuilderPlugin
+from PyBuilder import Tools
 
 class OperationConvertFlvToGvf(Operation):
     def _onParams( self, params ):
@@ -49,7 +49,7 @@ class OperationConvertFlvToGvf(Operation):
         for file in glob.glob(currentPath):
             filePngNames.append(file)
             pass
-        if ToolsBuilderPlugin.isAlphaInImageFile(filePngNames[0]) is True:
+        if Tools.isAlphaInImageFile(filePngNames[0]) is True:
             self.alpha = 1
             pass
         else:

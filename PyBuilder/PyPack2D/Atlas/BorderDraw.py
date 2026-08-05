@@ -1,4 +1,4 @@
-import ToolsBuilderPlugin
+from PyBuilder import Tools
 
 from PyBuilder.PyPack2D.Atlas.Field2D import Field2D
 
@@ -17,10 +17,10 @@ class BorderDrawRectangle(BorderDraw):
         newWidth = atlasImage.width + border.width
         newHeight = atlasImage.height + border.height
 
-        newImage = ToolsBuilderPlugin.createImage(newWidth, newHeight, 4, (0,0,0,0))
+        newImage = Tools.createImage(newWidth, newHeight, 4, (0,0,0,0))
 
         img = atlasImage.getImagePIL()
-        ToolsBuilderPlugin.pasteImage(newImage, img, border.left, border.top)
+        Tools.pasteImage(newImage, img, border.left, border.top)
         rightEdge = newWidth - 1
         bottomEdge = newHeight - 1
 
@@ -51,11 +51,11 @@ class BorderDrawEdge(BorderDraw):
         newWidth = atlasImage.width + border.width
         newHeight = atlasImage.height + border.height
 
-        newImage = ToolsBuilderPlugin.createImage(newWidth, newHeight, 4, (0,0,0,0))
+        newImage = Tools.createImage(newWidth, newHeight, 4, (0,0,0,0))
 
         img = atlasImage.getImagePIL()
-        ToolsBuilderPlugin.pasteImage(newImage, img, border.left, border.top)
-        data = ToolsBuilderPlugin.getImageData(newImage)
+        Tools.pasteImage(newImage, img, border.left, border.top)
+        data = Tools.getImageData(newImage)
         field2D = Field2D(data, newWidth, newHeight)
         #print(self.height,newHeight)
         #Copying data to box around
@@ -93,7 +93,7 @@ class BorderDrawEdge(BorderDraw):
             self.copyColumns(field2D, sourceColumn, columnNumbers)
             pass
 
-        ToolsBuilderPlugin.putImageData(newImage, data)
+        Tools.putImageData(newImage, data)
         return newImage
         pass
 

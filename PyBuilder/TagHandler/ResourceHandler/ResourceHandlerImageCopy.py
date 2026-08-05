@@ -3,7 +3,7 @@ from PyBuilder.FileSystem import FileSystem
 
 from PyBuilder.Environment import Environment
 
-import ToolsBuilderPlugin
+from PyBuilder import Tools
 
 class ResourceHandlerImageCopy(ResourceHandler):
     def _onExecute(self):
@@ -52,7 +52,7 @@ class ResourceHandlerImageCopy(ResourceHandler):
                 pass
             pass
 
-        if ToolsBuilderPlugin.isAlphaInImageFile(fullPath) is True:
+        if Tools.isAlphaInImageFile(fullPath) is True:
             self.node.setAttribute("Alpha", str(1))
             pass
         else:
