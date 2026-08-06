@@ -17,8 +17,3 @@ metadata. The relevant upstream projects are:
 
 PVRTexToolCLI is separately licensed by Imagination Technologies and is never
 downloaded or redistributed by Mengine-Builder.
-
-The Astralax runtime (`astralax.dll` or `libastralax.dylib`) is also supplied
-separately by the user and is never downloaded or redistributed by
-Mengine-Builder. `AstralaxCompiler` is built and released as part of Mengine's
-public tools bundle, but does not link to the Astralax runtime.

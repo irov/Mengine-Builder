@@ -2,16 +2,15 @@
   "schema_version": 1,
   "packages": {
     "mengine-tools": {
-      "version": "tools-v1.0.0",
+      "version": "tools-v1.0.1",
       "platforms": {
         "windows-x64": {
-          "url": "https://github.com/irov/Mengine/releases/download/tools-v1.0.0/mengine-tools-windows-x64.zip",
-          "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "url": "https://github.com/irov/Mengine/releases/download/tools-v1.0.1/mengine-tools-windows-x64.zip",
+          "sha256": "d06404f7a35a41b3983ed72846aa2a6bf28371b644a15cfacb411cba56afcb2c",
           "archive": "zip",
           "files": [
             "AlphaPremultiplier.exe",
             "AlphaSpreading.exe",
-            "AstralaxCompiler.exe",
             "ExtractorDXT1.exe",
             "ExtractorETC1.exe",
             "ImagePolygonize.exe",
@@ -26,13 +25,12 @@
           "executables": []
         },
         "macos-arm64": {
-          "url": "https://github.com/irov/Mengine/releases/download/tools-v1.0.0/mengine-tools-macos-arm64.tar.gz",
-          "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "url": "https://github.com/irov/Mengine/releases/download/tools-v1.0.1/mengine-tools-macos-arm64.tar.gz",
+          "sha256": "72eac440ab7375dc7ae17d3fde05766c723b226144616dc4195f32470a8e7413",
           "archive": "tar.gz",
           "files": [
             "AlphaPremultiplier",
             "AlphaSpreading",
-            "AstralaxCompiler",
             "ExtractorDXT1",
             "ExtractorETC1",
             "ImagePolygonize",
@@ -47,7 +45,6 @@
           "executables": [
             "AlphaPremultiplier",
             "AlphaSpreading",
-            "AstralaxCompiler",
             "ExtractorDXT1",
             "ExtractorETC1",
             "ImagePolygonize",
@@ -166,11 +163,6 @@
   "tools": {
     "AlphaPremultiplier": {"windows-x64": {"kind": "managed", "package": "mengine-tools", "path": "AlphaPremultiplier.exe"}, "macos-arm64": {"kind": "managed", "package": "mengine-tools", "path": "AlphaPremultiplier"}},
     "AlphaSpreading": {"windows-x64": {"kind": "managed", "package": "mengine-tools", "path": "AlphaSpreading.exe"}, "macos-arm64": {"kind": "managed", "package": "mengine-tools", "path": "AlphaSpreading"}},
-    "AstralaxCompiler": {"windows-x64": {"kind": "managed", "package": "mengine-tools", "path": "AstralaxCompiler.exe"}, "macos-arm64": {"kind": "managed", "package": "mengine-tools", "path": "AstralaxCompiler"}},
-    "AstralaxRuntime": {
-      "windows-x64": {"kind": "external", "package": "astralax", "version": "v1.0.0", "path": "astralax.dll", "sha256": "ea9f883bbf5c55040139ee921cd0255a24dac1966d6623ccbfb67c39b944c440"},
-      "macos-arm64": {"kind": "external", "package": "astralax", "version": "v1.0.0", "path": "libastralax.dylib", "sha256": "9339f9ba9caaeac9c01aa561ce5ca5996d40381a19c0969726fdeed7d6be416a"}
-    },
     "ExtractorDXT1": {"windows-x64": {"kind": "managed", "package": "mengine-tools", "path": "ExtractorDXT1.exe"}, "macos-arm64": {"kind": "managed", "package": "mengine-tools", "path": "ExtractorDXT1"}},
     "ExtractorETC1": {"windows-x64": {"kind": "managed", "package": "mengine-tools", "path": "ExtractorETC1.exe"}, "macos-arm64": {"kind": "managed", "package": "mengine-tools", "path": "ExtractorETC1"}},
     "ImagePolygonize": {"windows-x64": {"kind": "managed", "package": "mengine-tools", "path": "ImagePolygonize.exe"}, "macos-arm64": {"kind": "managed", "package": "mengine-tools", "path": "ImagePolygonize"}},

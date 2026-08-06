@@ -19,6 +19,13 @@ Run an existing build configuration without a wrapper executable:
 python ProjectBuilder.py -path_config <config.json> [-new_var <name>:<value>]
 ```
 
+Before switching a build machine, populate a clean cache and verify every
+managed tool for that platform:
+
+```text
+python scripts/verify_install.py --cache <empty-cache-directory>
+```
+
 On Apple Silicon, use a Homebrew Python explicitly when the system `python3`
 is older than 3.11:
 
@@ -65,16 +72,9 @@ immutable release asset and a reviewed manifest change with its SHA-256.
   `MENGINE_BUILDER_TOOL_PVRTEXTOOLCLI` when a PVRTC build requests it.
 - Resource Hacker is downloaded directly from the author's site and pinned by
   SHA-256. Its license prohibits third-party redistribution.
-- `AstralaxCompiler` is distributed with the Mengine tools bundle. When an
-  Astralax resource must be inspected, provide only the pinned runtime at
-  `.local-tools/astralax/v1.0.0/windows-x64/astralax.dll` or
-  `.local-tools/astralax/v1.0.0/macos-arm64/libastralax.dylib`. The equivalent
-  explicit override is `MENGINE_BUILDER_TOOL_ASTRALAXRUNTIME`.
-
 PTZ, DZZ and AEZ packaging is handled by the common `MengineConverter`
-aliases `ptc2ptz`, `dzb2dzz` and `aeb2aez`. It does not load the Astralax
-runtime. `AstralaxCompiler` uses that runtime only to compile or inspect
-particle data and no longer performs archive packaging.
+aliases `ptc2ptz`, `dzb2dzz` and `aeb2aez`; the managed tools bundle has no
+Astralax SDK or runtime dependency.
 
 macOS supports Apple Silicon `arm64`. Windows supports x64. The shader
 converters `text2vso`, `text2vso11`, `text2pso` and `text2pso11` remain

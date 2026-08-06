@@ -199,7 +199,7 @@ class ToolInstallerTests(unittest.TestCase):
 
     def test_missing_external_tool_has_exact_path_and_override(self):
         installer = self._installer()
-        expected = self.root / ".local-tools" / "licensed-sdk" / "v2.0.0" / "test-platform" / "runtime.bin"
+        expected = installer.external_root / "licensed-sdk" / "v2.0.0" / "test-platform" / "runtime.bin"
 
         with self.assertRaises(ToolInstallerError) as context:
             installer.resolve("external-tool")

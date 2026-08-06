@@ -4,7 +4,6 @@ import hashlib
 import json
 import os
 import sys
-import tempfile
 
 from PIL import Image as PillowImage
 from PIL import ImageChops
@@ -202,37 +201,4 @@ def log(message):
 
 
 def magicParticlesAtlasFiles(path):
-    runtime = tool_path("AstralaxRuntime")
-
-    with tempfile.TemporaryDirectory(prefix="mengine-astralax-") as directory:
-        result_path = os.path.join(directory, "atlas.info")
-        _run_native(
-            "AstralaxCompiler",
-            (
-                "--inspect",
-                "--in_path",
-                _absolute(path),
-                "--runtime_path",
-                runtime,
-                "--result_path",
-                result_path,
-            ),
-        )
-
-        with open(result_path, "r", encoding="utf-8") as stream:
-            lines = [line.rstrip("\r\n") for line in stream]
-
-    try:
-        atlas_count = int(lines[0])
-    except (IndexError, ValueError) as exception:
-        raise RuntimeError("AstralaxCompiler produced invalid atlas metadata") from exception
-
-    expected_lines = 1 + atlas_count * 5
-
-    if len(lines) != expected_lines:
-        raise RuntimeError(
-            "AstralaxCompiler produced incomplete atlas metadata: expected %d lines, got %d"
-            % (expected_lines, len(lines))
-        )
-
-    return [lines[1 + index * 5] for index in range(atlas_count)]
+    raise RuntimeError("magicParticlesAtlasFiles was not registered by the legacy ProjectBuilder")

@@ -138,26 +138,9 @@ class ImageFacadeTests(unittest.TestCase):
             self.assertTrue(Tools.isPow2SquadImageFile(path))
             self.assertEqual(Tools.pathSHA1(path), hashlib.sha1(path.read_bytes()).hexdigest())
 
-    def test_astralax_atlas_files_use_external_runtime(self):
-        runtime = Path("/licensed/libastralax.dylib")
-
-        def run_native(name, arguments):
-            self.assertEqual(name, "AstralaxCompiler")
-            self.assertIn("--inspect", arguments)
-            self.assertEqual(arguments[arguments.index("--runtime_path") + 1], runtime)
-            result = Path(arguments[arguments.index("--result_path") + 1])
-            result.write_text(
-                "2\nAtlas/smoke.webp\n0\n0\n64\n32\nAtlas/fire.webp\n0\n0\n128\n128\n",
-                encoding="utf-8",
-            )
-            return True
-
-        with mock.patch.object(Tools, "tool_path", return_value=runtime), mock.patch.object(
-            Tools, "_run_native", side_effect=run_native
-        ):
-            atlases = Tools.magicParticlesAtlasFiles("particle.ptc")
-
-        self.assertEqual(atlases, ["Atlas/smoke.webp", "Atlas/fire.webp"])
+    def test_astralax_atlas_inspection_is_not_registered(self):
+        with self.assertRaisesRegex(RuntimeError, "was not registered"):
+            Tools.magicParticlesAtlasFiles("particle.ptc")
 
 
 class GraphNodeJsonTests(unittest.TestCase):
