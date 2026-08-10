@@ -20,7 +20,11 @@ class GraphRootJson(GraphRoot):
 
     def _createChild(self, path):
         branch = self.fileSystemCursor.getBranch("")
-        child = GraphRootXmlDom(self.pakName, path, branch)
+
+        if FileSystem.getFileExtension(path) == "json":
+            child = GraphRootJson(self.pakName, path, branch)
+        else:
+            child = GraphRootXmlDom(self.pakName, path, branch)
 
         if child.initialise() is False:
             return None

@@ -38,8 +38,12 @@ class TagHandlerMaterials(TagHandler):
         pool = self.parserContext.getTagHandlerPool()
 
         for child in children:
-            path =  child.getAttribute("Path")
-            filename = FileSystem.setFileExtension(path,"xml")
+            path = child.getAttribute("Path")
+
+            if FileSystem.getFileExtension(path) == "json":
+                filename = path
+            else:
+                filename = FileSystem.setFileExtension(path, "xml")
 
             childDocument = document.getChild(filename)
 
