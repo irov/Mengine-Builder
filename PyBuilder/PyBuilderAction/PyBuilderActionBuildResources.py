@@ -176,7 +176,10 @@ class PyBuilderActionBuildResources(PyBuilderAction):
                 self.project.extraResourceProcess = False
                 pass
 
-            pack.finalise()
+            if pack.finalise() is False:
+                ErrorHandler.warning("invalid finalise resource pack [%s]", packName)
+                return False
+
             pass
 
         return True

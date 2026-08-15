@@ -5,6 +5,7 @@ from PyBuilder.Graph.GraphRoot import GraphRoot
 from PyBuilder.Graph.GraphRootContext import GraphRootContext
 from PyBuilder.Graph.GraphRootXmlDom import GraphRootXmlDom
 from PyBuilder.Operation.OperationManager import OperationManager
+from PyBuilder.Environment import Environment
 
 
 class GraphRootJson(GraphRoot):
@@ -80,6 +81,31 @@ class GraphRootJson(GraphRoot):
     def _onFinalise(self):
         destination = self.fileSystemCursor.getFileDestinationPath(self.sourceRelativeFilePath)
         source = self.fileSystemCursor.getFileSourcePath(self.sourceRelativeFilePath)
+        project = Environment.getCurrentProject()
+
+        if project.isMetabuf is True:
+            if self.isRewrite() is True:
+                directory = FileSystem.getDirname(self.sourceRelativeFilePath)
+                tempRoot = project.logDir if project.logDir is not None else project.destinationDir
+                tempDirectory = FileSystem.joinAndNormalisePath(tempRoot, "metabuf" if directory == "" else "metabuf/%s" % directory)
+                FileSystem.makeDirsRecursiveIfNotExist(tempDirectory)
+                source = FileSystem.joinAndNormalisePath(tempDirectory, FileSystem.getBasename(self.sourceRelativeFilePath))
+                FileSystem.jsonFileDumpContent(source, self.documentJson)
+
+            destination = FileSystem.setFileExtension(destination, "bin")
+
+            with OperationManager.runOperationChain() as oc:
+                oc.addOperation(
+                    "ConvertMetabuf",
+                    SourcePath=source,
+                    DestinationPath=destination,
+                    ProtocolPath=project.pathToProtocolXml,
+                    InputFormat="json",
+                    Meta="Data",
+                    Node=self.metabufNode,
+                )
+
+            return oc.isSuccess()
 
         if self.isRewrite() is True:
             destinationDir = FileSystem.getDirname(destination)

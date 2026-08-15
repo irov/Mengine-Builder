@@ -58,7 +58,17 @@ class TagHandlerResources(TagHandler):
             soundQuality = child.getAttribute("SoundQuality") if child.hasAttribute("SoundQuality") else None
 
             path = child.getAttribute("Path")
-            filename = FileSystem.setFileExtension(path, "xml")
+            extension = FileSystem.getFileExtension(path)
+
+            if extension in ("json", "xml"):
+                filename = path
+            elif extension == "bin":
+                jsonFilename = FileSystem.setFileExtension(path, "json")
+                xmlFilename = FileSystem.setFileExtension(path, "xml")
+                filename = jsonFilename if document.hasChild(jsonFilename) is True else xmlFilename
+            else:
+                ErrorHandler.error("resource Path must explicitly use .json, .xml or .bin: %s" % path)
+                return False
 
             childDocument = document.getChild(filename)
 
@@ -89,6 +99,12 @@ class TagHandlerResources(TagHandler):
                     return False
                     pass
                 pass
+
+            project = Environment.getCurrentProject()
+
+            if project.isMetabuf is True and extension in ("json", "xml"):
+                child.setAttribute("Path", FileSystem.setFileExtension(path, "bin"))
+                self.setDocumentToRewrite()
             pass
 
         return True

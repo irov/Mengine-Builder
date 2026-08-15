@@ -42,10 +42,10 @@ class ResourcePack(object):
             extension = FileSystem.getFileExtension(self.relativePathToDescription)
 
             if extension == "json":
-                self.rootDocument = GraphRootJson(self.name, self.relativePathToDescription, self.rootFileSystemCursor)
+                self.rootDocument = GraphRootJson(self.name, self.relativePathToDescription, self.rootFileSystemCursor, "Pak")
                 pass
             else:
-                self.rootDocument = GraphRootXmlDom(self.name, self.relativePathToDescription, self.rootFileSystemCursor)
+                self.rootDocument = GraphRootXmlDom(self.name, self.relativePathToDescription, self.rootFileSystemCursor, "Pak")
                 pass
 
             if self.rootDocument.initialise() is False:
@@ -91,9 +91,9 @@ class ResourcePack(object):
 
     def finalise(self):
         if self.rootDocument is not None:
-            self.rootDocument.finalise()
-            pass
-        pass
+            return self.rootDocument.finalise()
+
+        return True
 
     def convertDestinationToZip(self):
         ErrorHandler.importantMessage(" create zip pack from %s to %s " %(self.destinationDir, self.pathToZip))

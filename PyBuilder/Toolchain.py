@@ -110,7 +110,7 @@ def required_tools_for_config(config):
     if config.get("python_compile", True) is True and platform_name() == "macos":
         required.add("python2.7")
 
-    if config.get("xml2bin") is True:
+    if config.get("metabuf") is True:
         required.add("Metawrite")
 
     if config.get("png_opt") is True:

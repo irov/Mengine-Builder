@@ -2,10 +2,11 @@ __author__ = 'human88998999877'
 from PyBuilder.Error.ErrorHandler import  ErrorHandler
 
 class GraphRoot:
-    def __init__(self, pakName, sourceRelativeFilePath, fileSystemCursor):
+    def __init__(self, pakName, sourceRelativeFilePath, fileSystemCursor, metabufNode="DataBlock"):
         self.pakName = pakName
         self.sourceRelativeFilePath = sourceRelativeFilePath
         self.fileSystemCursor = fileSystemCursor
+        self.metabufNode = metabufNode
         self.children = {}
         self._isRewrite = False
         pass

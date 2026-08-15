@@ -104,8 +104,8 @@ class PyBuilderConsoleApp(object):
         self.addArgument(ArgumentBool("write_logs", "Logging"))
         self.addArgument(ArgumentString("log_dir", "Directory for writing log. if not specified and -write_logs is set current directory path is used "))
 
-        self.addArgument(ArgumentBool("xlsx_export", "Run Xlsx export from directory with application.ini on build start"))
-        self.addArgument(ArgumentBool("xml2bin", "Converting xml to bin"))
+        self.addArgument(ArgumentBool("xlsx_export", "Run Xlsx export from directory with application.json on build start"))
+        self.addArgument(ArgumentBool("metabuf", "Converting JSON/XML protocol data to Metabuf BIN"))
         self.addArgument(ArgumentString("old_exe_name", "Name of exe file in path_exe_dir. for example Win32Application.exe"))
         self.addArgument(ArgumentString("new_exe_name", "Wanted exe file name. \"For example Zombie Potatoes in Outer Space.exe\""))
         self.addArgument(ArgumentString("exe_description", "Exe file description"))

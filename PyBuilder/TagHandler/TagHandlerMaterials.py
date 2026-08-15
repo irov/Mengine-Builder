@@ -40,10 +40,17 @@ class TagHandlerMaterials(TagHandler):
         for child in children:
             path = child.getAttribute("Path")
 
-            if FileSystem.getFileExtension(path) == "json":
+            extension = FileSystem.getFileExtension(path)
+
+            if extension in ("json", "xml"):
                 filename = path
+            elif extension == "bin":
+                jsonFilename = FileSystem.setFileExtension(path, "json")
+                xmlFilename = FileSystem.setFileExtension(path, "xml")
+                filename = jsonFilename if document.hasChild(jsonFilename) is True else xmlFilename
             else:
-                filename = FileSystem.setFileExtension(path, "xml")
+                ErrorHandler.error("material Path must explicitly use .json, .xml or .bin: %s" % path)
+                return False
 
             childDocument = document.getChild(filename)
 
@@ -58,6 +65,12 @@ class TagHandlerMaterials(TagHandler):
 
                 return False
                 pass
+
+            project = Environment.getCurrentProject()
+
+            if project.isMetabuf is True and extension in ("json", "xml"):
+                child.setAttribute("Path", FileSystem.setFileExtension(path, "bin"))
+                self.setDocumentToRewrite()
             pass
 
         return True

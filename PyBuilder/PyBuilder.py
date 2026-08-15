@@ -24,7 +24,7 @@ class PyBuilder:
 
     def prepare(self,project):
         if not FileSystem.isFile(project.pathToApplicationJson):
-            ErrorHandler.error("Application ini not exist %s" % project.pathToApplicationJson)
+            ErrorHandler.error("Application JSON not exist %s" % project.pathToApplicationJson)
             return False
             pass
 

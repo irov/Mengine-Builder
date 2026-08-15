@@ -1,4 +1,3 @@
-from PyBuilder.Config.ConfigIni import ConfigIni
 from PyBuilder.Config.ConfigJson import ConfigJson
 from PyBuilder.Error.ErrorHandler import ErrorHandler
 from PyBuilder.FileSystem import FileSystem
@@ -52,7 +51,7 @@ class Project(object):
 
         self.removeDestDirIfExist = None
 
-        self.isXml2Bin = None
+        self.isMetabuf = False
 
         self.atlasMaxWidth = None
         self.atlasMaxHeight = None
@@ -173,16 +172,27 @@ class Project(object):
         newPath = FileSystem.addFolderBackslash(newPath)
         destinationDirName = FileSystem.joinAndNormalisePath(self.destinationDir, newPath)
 
+        if description is None:
+            return ResourcePack(self, name, None, self.destinationDir, sourceDirName, destinationDirName)
+
         extension = FileSystem.getFileExtension(description)
 
         if extension == "bin":
-            filename = FileSystem.setFileExtension(description, "xml") if description is not None else None
+            params["Format"] = "bin"
+            filename = FileSystem.setFileExtension(description, "xml")
             pack = ResourcePack(self, name, filename, self.destinationDir, sourceDirName, destinationDirName)
             return pack
 
-        if extension == "json":
+        if extension in ("json", "xml"):
+            if self.isMetabuf is True:
+                params["Description"] = FileSystem.setFileExtension(description, "bin")
+                params["Format"] = "bin"
+
             pack = ResourcePack(self, name, description, self.destinationDir, sourceDirName, destinationDirName)
             return pack
+
+        ErrorHandler.error("package '%s' Description must be JSON, XML or BIN: %s" % (name, description))
+        return None
 
         pass
 
@@ -197,7 +207,7 @@ class Project(object):
         self.packagesJson.read(pathToPackagesJson)
 
         if "GAME_PACKAGES" not in self.packagesJson:
-            ErrorHandler.error ("You must determine GAME_PACKAGES in ResourcePack.ini")
+            ErrorHandler.error ("You must determine GAME_PACKAGES in Packages.json")
             return False
             pass
 

@@ -5,7 +5,6 @@ from PyBuilder.Error.ErrorHandler import ErrorHandler
 
 def configureBuilderActions(pyBuilder, project):
     from PyBuilder.PyBuilderAction.PyBuilderActionBuildResources import PyBuilderActionBuildResources
-    # from PyBuilder.PyBuilderAction.PyBuilderActionChangeIniConfig import PyBuilderActionChangeIniConfig
     from PyBuilder.PyBuilderAction.PyBuilderActionChangeJsonConfig import PyBuilderActionChangeJsonConfig
     from PyBuilder.PyBuilderAction.PyBuilderActionCopyExe import PyBuilderActionCopyExe
     from PyBuilder.PyBuilderAction.PyBuilderActionCreatePacks import PyBuilderActionCreatePacks
@@ -65,7 +64,7 @@ def configureBuilderActions(pyBuilder, project):
         pass
     pass
 
-def configureOperations(IsXml2Bin, project):
+def configureOperations(project):
     from PyBuilder.Operation.OperationFactory import OperationFactory
 
     OperationFactory.setProject(project)
@@ -87,7 +86,7 @@ def configureOperations(IsXml2Bin, project):
     from PyBuilder.Operation.OperationConvertImageToACF import OperationConvertImageToACF
     from PyBuilder.Operation.OperationConvertImageToPVR import OperationConvertImageToPVR
     from PyBuilder.Operation.OperationConvertImageToDDS import OperationConvertImageToDDS
-    from PyBuilder.Operation.OperationConvertXmlToBin import OperationConvertXmlToBin
+    from PyBuilder.Operation.OperationConvertMetabuf import OperationConvertMetabuf
     from PyBuilder.Operation.OperationCopyDirRecursive import OperationCopyDirRecursive
     from PyBuilder.Operation.OperationCopyFile import OperationCopyFile
     from PyBuilder.Operation.OperationCreateZipPack import OperationCreateZipPack
@@ -116,7 +115,6 @@ def configureOperations(IsXml2Bin, project):
     from PyBuilder.Operation.Alias.OperationAliasRewriteXmlFromXmlDomDocument import OperationAliasRewriteXmlFromXmlDomDocument
     from PyBuilder.Operation.Alias.OperationAliasSafetyPngOptimize import OperationAliasSafetyPngOptimize
     from PyBuilder.Operation.Alias.OperationAliasPngResizer import OperationAliasPngResizer
-    from PyBuilder.Operation.Alias.OperationAliasCopyXmlFileWriteBin import OperationAliasCopyXmlFileWriteBin
 
     from PyBuilder.Operation.OperationCopyGlyphs import OperationCopyGlyphs
     from PyBuilder.Operation.OperationCopyFonts import OperationCopyFonts
@@ -144,7 +142,7 @@ def configureOperations(IsXml2Bin, project):
     OperationFactory.registerOperationType("ConvertImageToDDS", OperationConvertImageToDDS)
     OperationFactory.registerOperationType("ConvertImageToHTF", OperationConvertImageToHTF)
     OperationFactory.registerOperationType("ConvertImageToACF", OperationConvertImageToACF)
-    OperationFactory.registerOperationType("ConvertXmlToBin", OperationConvertXmlToBin)
+    OperationFactory.registerOperationType("ConvertMetabuf", OperationConvertMetabuf)
     OperationFactory.registerOperationType("CopyDirRecursive", OperationCopyDirRecursive)
     OperationFactory.registerOperationType("CopyFile", OperationCopyFile)
     OperationFactory.registerOperationType("CreateZipPack", OperationCreateZipPack)
@@ -175,12 +173,7 @@ def configureOperations(IsXml2Bin, project):
     OperationFactory.registerOperationType("AliasPngResizer", OperationAliasPngResizer)
     OperationFactory.registerOperationType("AliasRewriteXmlFromXmlDomDocument", OperationAliasRewriteXmlFromXmlDomDocument)
 
-    if IsXml2Bin is True:
-        OperationFactory.registerOperationType("CopyXmlFile", OperationAliasCopyXmlFileWriteBin)
-        pass
-    else:
-        OperationFactory.registerOperationType("CopyXmlFile", OperationCopyFile)
-        pass
+    OperationFactory.registerOperationType("CopyXmlFile", OperationCopyFile)
     pass
 
 
@@ -196,7 +189,6 @@ def build(jsonConfigContent):
     project = Project()
 
     project.logDir = jsonConfigContent.get("log_dir")
-    # project.pathToApplicationIni = jsonConfigContent.get("path_app_ini")
     project.pathToApplicationJson = jsonConfigContent.get("path_app_json")
     project.pathToProtocolXml = jsonConfigContent.get("path_protocol")
 
@@ -210,7 +202,7 @@ def build(jsonConfigContent):
     project.exeFileDescription = jsonConfigContent.get("exe_description")
     project.pathToIconGroup = jsonConfigContent.get("path_icongroup")
 
-    project.isXml2Bin = jsonConfigContent.get("xml2bin")
+    project.isMetabuf = jsonConfigContent.get("metabuf", False)
     project.isMakeAtlas = jsonConfigContent.get("make_atlas")
 
     project.imageConvertQuality = jsonConfigContent.get("img_convert_quality")
@@ -250,7 +242,7 @@ def build(jsonConfigContent):
     # project.initialise()
 
     configureBuilderActions(pyBuilder, project)
-    configureOperations(jsonConfigContent.get("xml2bin"), project)
+    configureOperations(project)
 
     #############
     if project.initialise() is False:

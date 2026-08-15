@@ -1,6 +1,7 @@
 from PyBuilder.FileSystem import FileSystem
 from PyBuilder.TagHandler.TagHandler import TagHandler
 from PyBuilder.Error.ErrorHandler import ErrorHandler
+from PyBuilder.Environment import Environment
 
 class TagHandlerInclude(TagHandler):
     def __init__(self, collector = None):
@@ -18,7 +19,17 @@ class TagHandlerInclude(TagHandler):
         pool = self.parserContext.getTagHandlerPool()
 
         path = self.node.getAttribute("Path")
-        filename = FileSystem.setFileExtension(path, "xml")
+        extension = FileSystem.getFileExtension(path)
+
+        if extension in ("json", "xml"):
+            filename = path
+        elif extension == "bin":
+            jsonFilename = FileSystem.setFileExtension(path, "json")
+            xmlFilename = FileSystem.setFileExtension(path, "xml")
+            filename = jsonFilename if document.hasChild(jsonFilename) is True else xmlFilename
+        else:
+            ErrorHandler.error("include Path must explicitly use .json, .xml or .bin: %s" % path)
+            return False
 
         childDocument = document.getChild(filename)
 
@@ -34,6 +45,12 @@ class TagHandlerInclude(TagHandler):
 
             return False
             pass
+
+        project = Environment.getCurrentProject()
+
+        if project.isMetabuf is True and extension in ("json", "xml"):
+            self.node.setAttribute("Path", FileSystem.setFileExtension(path, "bin"))
+            self.setDocumentToRewrite()
 
         return True
         pass

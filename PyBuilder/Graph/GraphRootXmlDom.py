@@ -8,6 +8,7 @@ from PyBuilder.Operation.OperationManager import OperationManager
 from PyBuilder.Graph.GraphRootContext import GraphRootContext
 from PyBuilder.Graph.GraphRoot import GraphRoot
 from PyBuilder.Graph.GraphNodeXmlDom import GraphNodeXmlDom
+from PyBuilder.Environment import Environment
 
 class GraphRootXmlDom(GraphRoot):
     unknownTags = {}
@@ -117,6 +118,40 @@ class GraphRootXmlDom(GraphRoot):
         pass
 
     def _onFinalise(self):
+        project = Environment.getCurrentProject()
+
+        if project.isMetabuf is True:
+            destination = self.fileSystemCursor.getFileDestinationPath(self.sourceRelativeFilePath)
+            source = self.fileSystemCursor.getFileSourcePath(self.sourceRelativeFilePath)
+
+            if self.isRewrite() is True:
+                directory = FileSystem.getDirname(self.sourceRelativeFilePath)
+                tempRoot = project.logDir if project.logDir is not None else project.destinationDir
+                tempDirectory = FileSystem.joinAndNormalisePath(tempRoot, "metabuf" if directory == "" else "metabuf/%s" % directory)
+                FileSystem.makeDirsRecursiveIfNotExist(tempDirectory)
+                source = FileSystem.joinAndNormalisePath(tempDirectory, FileSystem.getBasename(self.sourceRelativeFilePath))
+
+                with OperationManager.runOperationChain() as writeChain:
+                    writeChain.addOperation("WriteXmlFromDom", RootDomElement=self.documentXmlDom.documentElement, DestinationPath=source)
+
+                if writeChain.isSuccess() is False:
+                    return False
+
+            destination = FileSystem.setFileExtension(destination, BIN_EXTENSION)
+
+            with OperationManager.runOperationChain() as oc:
+                oc.addOperation(
+                    "ConvertMetabuf",
+                    SourcePath=source,
+                    DestinationPath=destination,
+                    ProtocolPath=project.pathToProtocolXml,
+                    InputFormat="xml",
+                    Meta="Data",
+                    Node=self.metabufNode,
+                )
+
+            return oc.isSuccess()
+
         if self.isRewrite() is True:
             self.rewriteXmlFromDom()
             pass

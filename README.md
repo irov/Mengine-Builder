@@ -91,13 +91,3 @@ Mengine-owned executables come from the `tools-v*` releases in
 `scripts/package_dependency_release.py` reproduces the initial dependency
 assets from the audited r444 tool checkout. It is a migration utility, not a
 runtime download path.
-
-## Tests
-
-```text
-python -m unittest discover -s tests -v
-```
-
-The test suite covers manifest validation, checksum failures, interrupted and
-unsafe archives, cold/warm cache behavior, missing runtime files, overrides,
-system-only tools and interprocess locking.
