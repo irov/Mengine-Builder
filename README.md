@@ -35,6 +35,10 @@ is older than 3.11:
 
 The legacy `ProjectBuilder.exe run run` prefix is intentionally unsupported.
 
+`ResourceTiledMap` from Mengine's `TiledMapPlugin` keeps Tiled JSON
+(`.tmj`/`.json`) unchanged and copies its external JSON tilesets
+(`.tsj`/`.json`) with their relative paths preserved for direct runtime loading.
+
 ## Tool resolution and cache
 
 Only tools required by the selected configuration are resolved. Resolution is

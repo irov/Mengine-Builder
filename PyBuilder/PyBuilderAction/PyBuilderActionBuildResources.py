@@ -28,6 +28,7 @@ from PyBuilder.TagHandler.ResourceHandler.ResourceHandlerImageConvertToPVRTC imp
 from PyBuilder.TagHandler.ResourceHandler.ResourceHandlerCursorSystem import ResourceHandlerCursorSystem
 from PyBuilder.TagHandler.ResourceHandler.ResourceHandlerCursorICO import ResourceHandlerCursorICO
 from PyBuilder.TagHandler.ResourceHandler.ResourceHandlerFile import ResourceHandlerFile
+from PyBuilder.TagHandler.ResourceHandler.ResourceHandlerTiledMap import ResourceHandlerTiledMap
 from PyBuilder.TagHandler.ResourceHandler.ResourceHandlerVideo import ResourceHandlerVideo
 from PyBuilder.TagHandler.ResourceHandler.ResourceHandlerParticle import ResourceHandlerParticle
 from PyBuilder.TagHandler.ResourceHandler.ResourceHandlerEmitterContainer import ResourceHandlerEmitterContainer
@@ -70,6 +71,7 @@ class PyBuilderActionBuildResources(PyBuilderAction):
             pass
 
         resourcesPool.setHandler("ResourceFile", ResourceHandlerFile())
+        resourcesPool.setHandler("ResourceTiledMap", ResourceHandlerTiledMap())
 
         resourcesPool.setHandler("ResourceParticle", ResourceHandlerParticle())
         resourcesPool.setHandler("ResourceAstralax", ResourceHandlerParticle())
