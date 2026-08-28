@@ -52,7 +52,7 @@ def _argument_value(arguments, name):
 
 
 def _load_preflight_config(arguments):
-    from PyBuilder.ConfigLoader import load_build_config
+    from Builder.ConfigLoader import load_build_config
 
     path = _argument_value(arguments, "-path_config")
 
@@ -63,7 +63,7 @@ def _load_preflight_config(arguments):
 
 
 def _preflight(arguments):
-    from PyBuilder.Toolchain import (
+    from Builder.Toolchain import (
         ToolchainError,
         check_tools,
         platform_name,
@@ -119,9 +119,9 @@ def main(arguments=None):
             return 2
 
     try:
-        from PyBuilder.PyBuilderConsoleApp import PyBuilderConsoleApp
+        from Builder.BuilderConsoleApp import BuilderConsoleApp
 
-        application = PyBuilderConsoleApp()
+        application = BuilderConsoleApp()
         application.initialise()
         result = application.run(*arguments)
         return 0 if result is True or help_requested is True else 1

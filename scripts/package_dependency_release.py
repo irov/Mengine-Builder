@@ -109,7 +109,7 @@ def provenance(staging, source_label, description):
     return {
         "schema_version": 1,
         "description": description,
-        "migration_source": "MengineTools PyBuilderConsole r444 audited checkout",
+        "migration_source": "MengineTools r444 audited checkout",
         "source_directory": source_label,
         "files": files,
     }
@@ -191,7 +191,7 @@ def package(source_root, output_root):
             {
                 "schema_version": 1,
                 "release": "dependencies-v1.0.0",
-                "migration_source": "MengineTools PyBuilderConsole r444 audited checkout",
+                "migration_source": "MengineTools r444 audited checkout",
                 "archives": [
                     {"name": name, "sha256": checksum}
                     for checksum, name in checksums
@@ -206,10 +206,15 @@ def package(source_root, output_root):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--mengine-tools-checkout", required=True, type=Path)
+    parser.add_argument(
+        "--dependency-source",
+        required=True,
+        type=Path,
+        help="directory containing the legacy win32/tools and macos/tools trees",
+    )
     parser.add_argument("--output", required=True, type=Path)
     arguments = parser.parse_args()
-    package(arguments.mengine_tools_checkout.resolve() / "PyBuilderConsole", arguments.output.resolve())
+    package(arguments.dependency_source.resolve(), arguments.output.resolve())
 
 
 if __name__ == "__main__":

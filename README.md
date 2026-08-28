@@ -1,7 +1,7 @@
 # Mengine-Builder
 
 Mengine-Builder is the Python 3.11+ resource and packaging builder used by
-Mengine projects. It is the source-only successor to `PyBuilderConsole`.
+Mengine projects. It replaces the retired resource-builder executable.
 Native tools, SDKs, game configurations and game-specific batch files are not
 stored in this repository.
 

@@ -8,8 +8,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from PyBuilder.ToolInstaller import ToolInstaller, ToolInstallerError
-from PyBuilder.Toolchain import platform_key
+from Builder.ToolInstaller import ToolInstaller, ToolInstallerError
+from Builder.Toolchain import platform_key
 
 
 def main():
