@@ -16,7 +16,7 @@ py -3 -m pip install --user -r requirements.txt
 Run an existing build configuration without a wrapper executable:
 
 ```text
-python ProjectBuilder.py -path_config <config.json> [-new_var <name>:<value>]
+python MengineBuilder.py -path_config <config.json> [-new_var <name>:<value>]
 ```
 
 Before switching a build machine, populate a clean cache and verify every
@@ -30,10 +30,10 @@ On Apple Silicon, use a Homebrew Python explicitly when the system `python3`
 is older than 3.11:
 
 ```text
-/opt/homebrew/bin/python3.14 ProjectBuilder.py -path_config <config.json>
+/opt/homebrew/bin/python3.14 MengineBuilder.py -path_config <config.json>
 ```
 
-The legacy `ProjectBuilder.exe run run` prefix is intentionally unsupported.
+The legacy executable `run run` prefix is intentionally unsupported.
 
 `ResourceTiledMap` from Mengine's `TiledMapPlugin` keeps Tiled JSON
 (`.tmj`/`.json`) unchanged and copies its external JSON tilesets
@@ -80,9 +80,10 @@ PTZ, DZZ and AEZ packaging is handled by the common `MengineConverter`
 aliases `ptc2ptz`, `dzb2dzz` and `aeb2aez`; the managed tools bundle has no
 Astralax SDK or runtime dependency.
 
-macOS supports Apple Silicon `arm64`. Windows supports x64. The shader
-converters `text2vso`, `text2vso11`, `text2pso` and `text2pso11` remain
-Windows-only; macOS resource rewriting removes those platform artifacts.
+macOS supports Apple Silicon `arm64`. Windows supports x64. The DX11 shader
+converters `text2vso11` and `text2pso11` remain Windows-only; resource
+rewriting removes obsolete DX9 shader converters and unsupported platform
+artifacts.
 
 ## Releases and licenses
 

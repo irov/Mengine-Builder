@@ -52,7 +52,7 @@ class PyBuilderConsoleApp(object):
         pass
 
     def help(self):
-        info = "ProjectBuilder.py -path_config <config.json> [-new_var <name>:<value>]...\nPossible arguments:\n"
+        info = "MengineBuilder.py -path_config <config.json> [-new_var <name>:<value>]...\nPossible arguments:\n"
         for argument in self.arguments:
             info += argument.getInfo() + "\n"
             pass

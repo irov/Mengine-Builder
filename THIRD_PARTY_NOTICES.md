@@ -1,6 +1,6 @@
 # Third-party notices
 
-Mengine-Builder contains Python source derived from the former ProjectBuilder
+Mengine-Builder contains Python source derived from the former resource builder
 in MengineTools. The source in this repository is licensed under MIT.
 
 Native tools are not stored in Git. They are downloaded from immutable URLs

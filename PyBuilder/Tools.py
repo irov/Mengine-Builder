@@ -1,4 +1,4 @@
-"""Shared native-tool and image helpers for ProjectBuilder."""
+"""Shared native-tool and image helpers for Mengine-Builder."""
 
 import hashlib
 import json
@@ -43,7 +43,7 @@ def writeBin(protocol_path, input_format, meta, node, source_path, bin_path):
 
 def convert(from_path, to_path, convert_type, params):
     if convert_type == "ffmpegToGVF":
-        raise RuntimeError("ffmpegToGVF is not registered in the legacy ProjectBuilder")
+        raise RuntimeError("ffmpegToGVF is not registered in Mengine-Builder")
 
     return _run_native(
         "MengineConverter",
@@ -209,4 +209,4 @@ def log(message):
 
 
 def magicParticlesAtlasFiles(path):
-    raise RuntimeError("magicParticlesAtlasFiles was not registered by the legacy ProjectBuilder")
+    raise RuntimeError("magicParticlesAtlasFiles is not registered in Mengine-Builder")
