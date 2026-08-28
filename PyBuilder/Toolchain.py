@@ -20,7 +20,8 @@ class ToolNotFoundError(ToolchainError):
 
 
 CONSOLE_ROOT = Path(__file__).resolve().parent.parent
-_WINDOWS_ONLY_CONVERTERS = frozenset(("text2vso", "text2vso11", "text2pso", "text2pso11"))
+_WINDOWS_ONLY_CONVERTERS = frozenset(("text2vso11", "text2pso11"))
+_UNSUPPORTED_CONVERTERS = frozenset(("text2vso", "text2vso3", "text2pso"))
 
 
 def platform_name():
@@ -101,6 +102,9 @@ def converter_params_json(params):
 
 
 def converter_supported(name):
+    if name in _UNSUPPORTED_CONVERTERS:
+        return False
+
     return platform_name() == "win32" or name not in _WINDOWS_ONLY_CONVERTERS
 
 
