@@ -144,7 +144,6 @@ class GraphRootXmlDom(GraphRoot):
                     "ConvertMetabuf",
                     SourcePath=source,
                     DestinationPath=destination,
-                    ProtocolPath=project.pathToProtocolXml,
                     InputFormat="xml",
                     Meta="Data",
                     Node=self.metabufNode,

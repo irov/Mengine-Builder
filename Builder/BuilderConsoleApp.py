@@ -63,7 +63,6 @@ class BuilderConsoleApp(object):
 
     def initialise(self):
         self.addArgument(ArgumentString("path_app_json", "Path to application.json"))
-        self.addArgument(ArgumentString("path_protocol", "Path to protocol.xml"))
         self.addArgument(ArgumentString("dest_dir", "Path to destination directory"))
         self.addArgument(ArgumentString("path_exe_dir", "Path to directory with *.exe"))
         self.addArgument(ArgumentString("path_dest_exe_dir", "Path where *.exe must be placed"))

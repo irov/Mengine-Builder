@@ -26,11 +26,10 @@ def _run_native(name, arguments):
     return True
 
 
-def writeBin(protocol_path, input_format, meta, node, source_path, bin_path):
+def writeBin(input_format, meta, node, source_path, bin_path):
     return _run_native(
         "Metawrite",
         (
-            "--protocol", _absolute(protocol_path),
             "--input-format", str(input_format),
             "--output-format", "bin",
             "--meta", str(meta),

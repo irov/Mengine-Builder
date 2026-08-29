@@ -190,8 +190,6 @@ def build(jsonConfigContent):
 
     project.logDir = jsonConfigContent.get("log_dir")
     project.pathToApplicationJson = jsonConfigContent.get("path_app_json")
-    project.pathToProtocolXml = jsonConfigContent.get("path_protocol")
-
     project.destinationDir = jsonConfigContent.get("dest_dir")
     project.sourceDir = jsonConfigContent.get("path_resources")
     project.pathToSourceExe = jsonConfigContent.get("path_exe_dir")

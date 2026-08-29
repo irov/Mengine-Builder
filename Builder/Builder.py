@@ -28,11 +28,6 @@ class Builder:
             return False
             pass
 
-        if not FileSystem.isFile(project.pathToProtocolXml):
-            ErrorHandler.error("protocol.xml not exist %s" % project.pathToProtocolXml)
-            return False
-            pass
-
         if not FileSystem.isDirectory(project.pathToSourceExe) and project.NoExe is False:
             ErrorHandler.error("directory with execution files not exist %s" % project.pathToSourceExe)
             return False

@@ -99,7 +99,6 @@ class GraphRootJson(GraphRoot):
                     "ConvertMetabuf",
                     SourcePath=source,
                     DestinationPath=destination,
-                    ProtocolPath=project.pathToProtocolXml,
                     InputFormat="json",
                     Meta="Data",
                     Node=self.metabufNode,

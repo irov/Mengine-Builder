@@ -27,8 +27,6 @@ class Project(object):
 
         self.dirBin2 = None
 
-        self.pathToProtocolXml = None
-
         self.pathToSourceExe = None
         self.pathToDestinationExe = None
         # self.pathToResources = None

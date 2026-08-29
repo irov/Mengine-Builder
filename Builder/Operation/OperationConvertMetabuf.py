@@ -9,7 +9,6 @@ class OperationConvertMetabuf(Operation):
     def _onParams(self, params):
         self.sourcePath = params.pop("SourcePath")
         self.destinationPath = params.pop("DestinationPath")
-        self.protocolPath = params.pop("ProtocolPath")
         self.inputFormat = params.pop("InputFormat")
         self.meta = params.pop("Meta", "Data")
         self.node = params.pop("Node")
@@ -37,7 +36,6 @@ class OperationConvertMetabuf(Operation):
             FileSystem.makeDirsRecursive(directory)
 
         if Tools.writeBin(
-            self.protocolPath,
             self.inputFormat,
             self.meta,
             self.node,
@@ -45,9 +43,8 @@ class OperationConvertMetabuf(Operation):
             self.destinationPath,
         ) is False:
             ErrorHandler.warning(
-                "invalid Metabuf conversion [%s] protocol [%s] source [%s] destination [%s]",
+                "invalid Metabuf conversion [%s] source [%s] destination [%s]",
                 self.__repr__(),
-                self.protocolPath,
                 self.sourcePath,
                 self.destinationPath,
             )
