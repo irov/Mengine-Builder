@@ -40,6 +40,12 @@ class Project(object):
         self.imageConvertQuality = 100
         self.imageConvertMode = None
         self.imagePremultiply = False
+        self.soundConvertQuality = 100
+        self.soundConvertMode = None
+        self.musicConvertQuality = 100
+        self.musicConvertMode = None
+        self.videoConvertQuality = 100
+        self.videoResize = None
         self.resourceTag = []
         self.extraResourceTag = []
         self.extraPakName = None
