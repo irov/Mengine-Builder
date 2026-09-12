@@ -115,12 +115,11 @@ leaves SDK packaging and final directory publication to its caller. The caller
 must use unpublished staging and publish it only after success. Calls in one
 process are sequential; each starts with fresh conversion and operation caches.
 
-The tools-v1.0.5 AlphaSpreading binary has a broken libpng reader. The Mengine
-ToolPNG fix must be included in a subsequent immutable tools release. Until then,
-point `MENGINE_BUILDER_TOOL_ALPHASPREADING` at a tool built from the corrected
-engine checkout. No managed-cache replacement is performed by Builder.
-Run `python3 -m unittest discover -s tests -v` with that override to include the
-native pixel, failure, alias and repeated-build regression tests.
+Premultiplication needs an AlphaSpreading whose PNG reader widens RGB and
+palette inputs to RGBA; `tools-v1.0.6` is the first release that carries it.
+`MENGINE_BUILDER_TOOL_ALPHASPREADING` overrides the managed binary when a
+locally built one is needed. No managed-cache replacement is performed by
+Builder.
 
 ## Releases and licenses
 
