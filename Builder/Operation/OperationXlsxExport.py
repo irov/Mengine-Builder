@@ -12,10 +12,6 @@ class OperationXlsxExport(Operation):
 
     def _onRun(self):
         try:
-            from Builder.WinregCompat import install_macos_winreg
-
-            install_macos_winreg()
-
             from xlsxExporter import export
             return export(self.CodeName)
         except ImportError as ex:
