@@ -5,16 +5,21 @@ from Builder.TagHandler.TagHandlerPool import TagHandlerPool
 from Builder.TagHandler.TagHandlerResource import TagHandlerResource
 from Builder.TagHandler.TagHandlerResources import TagHandlerResources
 from Builder.TagHandler.TagHandlerInclude import TagHandlerInclude
+from Builder.TagHandler.ResourceHandler.ResourceHandlerImageDefaultPngOptimize import ResourceHandlerImageDefaultPngOptimize
 
 from Builder.PngOptimizer import PngOptimizer
 from Builder.Watcher.Watcher import Watcher
 
 class BuilderActionPngOptimize(BuilderAction):
+    def _onInitialise(self):
+        self.project.pngOptimizer = None
+        return True
+
     def getPool(self):
         pool = TagHandlerPool(self.project)
         resourcePool = TagHandlerPool(self.project)
 
-        #resourcePool.setHandler("ResourceImageDefault", ResourceHandlerImageDefaultPngOptimize())
+        resourcePool.setHandler("ResourceImageDefault", ResourceHandlerImageDefaultPngOptimize())
         pool.setHandler("Resource", TagHandlerResource(resourcePool))
         pool.setHandler("Include", TagHandlerInclude())
         pool.setHandler("Resources", TagHandlerResources())
@@ -31,7 +36,7 @@ class BuilderActionPngOptimize(BuilderAction):
                 return False
             pass
 
-        if PngOptimizer.flush() is False:
+        if self.project.pngOptimizer.flush() is False:
             ErrorHandler.warning("invalid png optimizer flush [%s]", self.__repr__())
 
             return False
@@ -42,14 +47,17 @@ class BuilderActionPngOptimize(BuilderAction):
 
     def _onRun(self):
         Watcher.startInterval("PNGOPTIMIZE")
-        result = self.visitPacks()
-        Watcher.stopInterval("PNGOPTIMIZE")
-
-        return result
+        self.project.pngOptimizer = PngOptimizer(self.project.logDir or self.project.destinationDir)
+        try:
+            return self.visitPacks()
+        finally:
+            Watcher.stopInterval("PNGOPTIMIZE")
         pass
 
     def _onFinalise(self):
-        #print("DELETED OPT FILES")
-        PngOptimizer.deleteOptimizedFiles()
+        if self.project.pngOptimizer is not None:
+            self.project.pngOptimizer.cleanup()
+            self.project.pngOptimizer = None
+        return True
         pass
     pass

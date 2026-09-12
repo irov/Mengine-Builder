@@ -12,7 +12,11 @@ class OperationWriteXmlFromDom(Operation):
         pass
 
     def _onRun(self):
-        xml = self.rootElement.toprettyxml(encoding='UTF-8', indent="  ", newl="\n")
+        root = self.rootElement.cloneNode(deep=True)
+        for node in [root] + list(root.getElementsByTagName("*")):
+            if node.hasAttribute("__Dir"):
+                node.removeAttribute("__Dir")
+        xml = root.toprettyxml(encoding='UTF-8', indent="  ", newl="\n")
         FileSystem.filePutContents(self.destinationPath, xml)
 
         return True

@@ -117,7 +117,7 @@ def required_tools_for_config(config):
     if config.get("metabuf") is True:
         required.add("Metawrite")
 
-    if config.get("png_opt") is True:
+    if config.get("png_opt") is True or config.get("img_premultiply") is True:
         required.add("AlphaSpreading")
 
     image_mode = config.get("img_convert")

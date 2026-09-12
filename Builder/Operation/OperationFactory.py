@@ -6,11 +6,15 @@ class OperationFactory:
 
     @staticmethod
     def setProject(project):
+        # Cached operations retain project paths and options.
+        OperationFactory.operationCache.clear()
         OperationFactory.project = project
         pass
 
     @staticmethod
     def registerOperationType(name, operationClassType):
+        if OperationFactory.operationTypes.get(name) is operationClassType:
+            return
         if OperationFactory.hasOperationType( name ):
             ErrorHandler.error("OperationFactory registerOperationType  already has %s" % name)
             pass

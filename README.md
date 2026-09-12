@@ -85,6 +85,43 @@ converters `text2vso11` and `text2pso11` remain Windows-only; resource
 rewriting removes obsolete DX9 shader converters and unsupported platform
 artifacts.
 
+## PNG premultiplication and resource-only builds
+
+`img_premultiply: true` enables the native PNG stage even when `png_opt` is false.
+It runs before atlas packing, resizing and format conversion. Register source
+PNGs as `ResourceImageDefault` in XML/JSON resource descriptions. `File.Premultiply`
+describes the source: omitted/0 is straight alpha, 1 is already premultiplied.
+The latter is copied without another PMA or alpha-spreading pass. With PMA enabled,
+Builder transforms the copied PNG and sets `Premultiply=1` only in output
+declarations. PNG preprocessing preserves the original filename and package-relative
+`File.Path`; no suffix is added. With only `png_opt` enabled, the PMA flag stays
+unchanged. Source images and source declarations are never modified.
+
+Images with the same source and conversion parameters share a native job.
+Intermediate files live for one build and are removed on success or failure;
+internal `__Dir` paths are excluded from serialized resource descriptions.
+Conversion failures stop the build before resource export.
+
+For projects whose SDK/application packaging is handled elsewhere:
+
+```python
+from Builder.Build import build_resource_pack
+build_resource_pack(source_resources, unpublished_staging,
+                    description="Package.xml", img_premultiply=True)
+```
+
+This API reuses the PNG and resource-export actions, retains PNG format and
+leaves SDK packaging and final directory publication to its caller. The caller
+must use unpublished staging and publish it only after success. Calls in one
+process are sequential; each starts with fresh conversion and operation caches.
+
+The tools-v1.0.5 AlphaSpreading binary has a broken libpng reader. The Mengine
+ToolPNG fix must be included in a subsequent immutable tools release. Until then,
+point `MENGINE_BUILDER_TOOL_ALPHASPREADING` at a tool built from the corrected
+engine checkout. No managed-cache replacement is performed by Builder.
+Run `python3 -m unittest discover -s tests -v` with that override to include the
+native pixel, failure, alias and repeated-build regression tests.
+
 ## Releases and licenses
 
 Mengine-owned executables come from the `tools-v*` releases in

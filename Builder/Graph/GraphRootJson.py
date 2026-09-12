@@ -83,6 +83,15 @@ class GraphRootJson(GraphRoot):
         source = self.fileSystemCursor.getFileSourcePath(self.sourceRelativeFilePath)
         project = Environment.getCurrentProject()
 
+        def exported(value):
+            if isinstance(value, dict):
+                return {key: exported(child) for key, child in value.items() if key != "__Dir"}
+            if isinstance(value, list):
+                return [exported(child) for child in value]
+            return value
+
+        output_document = exported(self.documentJson)
+
         if project.isMetabuf is True:
             if self.isRewrite() is True:
                 directory = FileSystem.getDirname(self.sourceRelativeFilePath)
@@ -90,7 +99,7 @@ class GraphRootJson(GraphRoot):
                 tempDirectory = FileSystem.joinAndNormalisePath(tempRoot, "metabuf" if directory == "" else "metabuf/%s" % directory)
                 FileSystem.makeDirsRecursiveIfNotExist(tempDirectory)
                 source = FileSystem.joinAndNormalisePath(tempDirectory, FileSystem.getBasename(self.sourceRelativeFilePath))
-                FileSystem.jsonFileDumpContent(source, self.documentJson)
+                FileSystem.jsonFileDumpContent(source, output_document)
 
             destination = FileSystem.setFileExtension(destination, "bin")
 
@@ -109,7 +118,7 @@ class GraphRootJson(GraphRoot):
         if self.isRewrite() is True:
             destinationDir = FileSystem.getDirname(destination)
             FileSystem.makeDirsRecursiveIfNotExist(destinationDir)
-            FileSystem.jsonFileDumpContent(destination, self.documentJson)
+            FileSystem.jsonFileDumpContent(destination, output_document)
             return True
 
         with OperationManager.runOperationChain() as oc:

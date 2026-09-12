@@ -1,5 +1,3 @@
-from functools import reduce
-
 from Builder.Config.BaseConfig import BaseConfig
 from Builder.Error.ErrorHandler import ErrorHandler
 from Builder.FileSystem import FileSystem
@@ -38,8 +36,15 @@ class ConfigJson(BaseConfig):
 
         if self.name.lower() == "packages.json":
             gP = "GAME_PACKAGES"
-            sectionsMustExist = reduce(lambda x,y: x + y, self.data.get(gP).values())
-            sectionsMustExist.append(gP)
+            sectionsMustExist = [gP]
+
+            for sections in self.data.get(gP).values():
+                if isinstance(sections, list):
+                    sectionsMustExist.extend(sections)
+                else:
+                    sectionsMustExist.append(sections)
+                pass
+
             keys = list(self.data.keys())
             for key in keys:
                 if key not in sectionsMustExist:

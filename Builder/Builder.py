@@ -48,18 +48,23 @@ class Builder:
             pass
 
         elif project.removeDestDirIfExist is True:
-            pathlogs = self.logger.getPathToLogs()
-            self.logger.finalise()
+            pathlogs = None
+
+            if self.logger is not None:
+                pathlogs = self.logger.getPathToLogs()
+                self.logger.finalise()
 
             FileSystem.removeDirRecursive(project.destinationDir)
             FileSystem.makeDirsRecursive(project.destinationDir)
 
-            print("!!!!!!!!!!!!!!!!!!!!Remove Dir", project.logDir)
-            FileSystem.removeDirRecursive(project.logDir)
-            FileSystem.makeDirsRecursiveIfNotExist(project.logDir)
-            # FileSystem.makeDirsRecursive(project.logDir)
+            if project.logDir is not None:
+                print("!!!!!!!!!!!!!!!!!!!!Remove Dir", project.logDir)
+                FileSystem.removeDirRecursive(project.logDir)
+                FileSystem.makeDirsRecursiveIfNotExist(project.logDir)
+                # FileSystem.makeDirsRecursive(project.logDir)
 
-            self.logger.initialise(pathlogs)
+            if self.logger is not None:
+                self.logger.initialise(pathlogs)
             pass
 
         if not FileSystem.isDirectory(project.pathToDestinationExe):

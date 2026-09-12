@@ -50,6 +50,7 @@ class Project(object):
         self.removeDestDirIfExist = None
 
         self.isMetabuf = False
+        self.metabufProtocolPath = None
 
         self.atlasMaxWidth = None
         self.atlasMaxHeight = None

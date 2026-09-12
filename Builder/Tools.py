@@ -3,13 +3,14 @@
 import hashlib
 import json
 import os
+import subprocess
 import sys
 
 from PIL import Image as PillowImage
 from PIL import ImageChops
 
 from Builder.OSSystem import OSSystem
-from Builder.Toolchain import converter_params_json, tool_path
+from Builder.Toolchain import CONSOLE_ROOT, converter_params_json, tool_path
 
 
 def _absolute(path):
@@ -26,17 +27,48 @@ def _run_native(name, arguments):
     return True
 
 
-def writeBin(input_format, meta, node, source_path, bin_path):
+def _metabuf_protocol_path(explicit_path=None):
+    candidates = (
+        explicit_path,
+        os.environ.get("MENGINE_METABUF_PROTOCOL"),
+        os.path.join(CONSOLE_ROOT.parent, "Mengine", "src", "Metacode", "protocol.xml"),
+    )
+
+    for candidate in candidates:
+        if candidate is not None and os.path.isfile(candidate):
+            return _absolute(candidate)
+
+    raise RuntimeError(
+        "Metabuf protocol.xml is required; set metabuf_protocol in the Builder profile or MENGINE_METABUF_PROTOCOL"
+    )
+
+
+def writeBin(input_format, meta, node, source_path, bin_path, protocol_path=None):
+    metawrite = tool_path("Metawrite")
+    help_process = subprocess.run(
+        [metawrite, "--help"],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        text=True,
+        check=False,
+    )
+    arguments = []
+
+    if "--protocol" in help_process.stdout:
+        arguments.extend(("--protocol", _metabuf_protocol_path(protocol_path)))
+
+    arguments.extend((
+        "--input-format", str(input_format),
+        "--output-format", "bin",
+        "--meta", str(meta),
+        "--node", str(node),
+        "--in", _absolute(source_path),
+        "--out", _absolute(bin_path),
+    ))
+
     return _run_native(
         "Metawrite",
-        (
-            "--input-format", str(input_format),
-            "--output-format", "bin",
-            "--meta", str(meta),
-            "--node", str(node),
-            "--in", _absolute(source_path),
-            "--out", _absolute(bin_path),
-        ),
+        tuple(arguments),
     )
 
 

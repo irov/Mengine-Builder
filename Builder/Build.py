@@ -37,7 +37,7 @@ def configureBuilderActions(builder, project):
         builder.addAction(BuilderActionCopyExe())
         pass
 
-    if project.IsPngOptimize is True:
+    if project.IsPngOptimize is True or project.imagePremultiply is True:
         builder.addAction(BuilderActionPngOptimize())
         pass
 
@@ -87,6 +87,7 @@ def configureOperations(project):
     from Builder.Operation.OperationConvertImageToPVR import OperationConvertImageToPVR
     from Builder.Operation.OperationConvertImageToDDS import OperationConvertImageToDDS
     from Builder.Operation.OperationConvertMetabuf import OperationConvertMetabuf
+    from Builder.Operation.OperationCompileMengineEditorAsset import OperationCompileMengineEditorAsset
     from Builder.Operation.OperationCopyDirRecursive import OperationCopyDirRecursive
     from Builder.Operation.OperationCopyFile import OperationCopyFile
     from Builder.Operation.OperationCreateZipPack import OperationCreateZipPack
@@ -143,6 +144,7 @@ def configureOperations(project):
     OperationFactory.registerOperationType("ConvertImageToHTF", OperationConvertImageToHTF)
     OperationFactory.registerOperationType("ConvertImageToACF", OperationConvertImageToACF)
     OperationFactory.registerOperationType("ConvertMetabuf", OperationConvertMetabuf)
+    OperationFactory.registerOperationType("CompileMengineEditorAsset", OperationCompileMengineEditorAsset)
     OperationFactory.registerOperationType("CopyDirRecursive", OperationCopyDirRecursive)
     OperationFactory.registerOperationType("CopyFile", OperationCopyFile)
     OperationFactory.registerOperationType("CreateZipPack", OperationCreateZipPack)
@@ -201,6 +203,7 @@ def build(jsonConfigContent):
     project.pathToIconGroup = jsonConfigContent.get("path_icongroup")
 
     project.isMetabuf = jsonConfigContent.get("metabuf", False)
+    project.metabufProtocolPath = jsonConfigContent.get("metabuf_protocol")
     project.isMakeAtlas = jsonConfigContent.get("make_atlas")
 
     project.imageConvertQuality = jsonConfigContent.get("img_convert_quality")
@@ -253,12 +256,14 @@ def build(jsonConfigContent):
         return False
         pass
 
-    if builder.build() is False:
-        ErrorHandler.warning("invalid build")
-        return False
-        pass
+    try:
+        if builder.build() is False:
+            ErrorHandler.warning("invalid build")
+            return False
+    finally:
+        finalized = builder.finalise()
 
-    if builder.finalise() is False:
+    if finalized is False:
         ErrorHandler.warning("invalid finalize")
         return False
         pass
@@ -267,3 +272,70 @@ def build(jsonConfigContent):
 
     return True
     pass
+
+
+def build_resource_pack(source_dir, destination_dir, *, description="Package.xml", name="Resources",
+                        img_premultiply=False, png_opt=False):
+    """Run the normal PNG and resource-export actions into unpublished staging.
+
+    This entry point leaves application/SDK packaging to the caller. It exports
+    an image/script resource pack with PNGs retained as PNGs. The full build()
+    pipeline additionally supports atlases, resizing and format conversion.
+    """
+    from pathlib import Path
+    import tempfile
+    from Builder import Constants
+    from Builder.Environment import Environment
+    from Builder.ResourcePack import ResourcePack
+    from Builder.Toolchain import tool_path
+    from Builder.BuilderAction.BuilderActionPngOptimize import BuilderActionPngOptimize
+    from Builder.BuilderAction.BuilderActionBuildResources import BuilderActionBuildResources
+
+    source, destination = Path(source_dir).resolve(), Path(destination_dir).resolve()
+    if source.is_relative_to(destination) or destination.is_relative_to(source):
+        raise ValueError("Resource source and staging directories must not overlap")
+    if not source.is_dir() or not (source / description).is_file():
+        raise ValueError("Missing resource package: " + str(source / description))
+    if type(img_premultiply) is not bool or type(png_opt) is not bool:
+        raise ValueError("img_premultiply and png_opt must be booleans")
+    if img_premultiply or png_opt:
+        tool_path("AlphaSpreading")
+
+    destination.mkdir(parents=True, exist_ok=True)
+    previous_project = Environment.getCurrentProject()
+    with tempfile.TemporaryDirectory(prefix="resource-build-", dir=destination.parent) as workspace:
+        project = Project()
+        project.sourceDir, project.destinationDir, project.logDir = str(source), str(destination), workspace
+        project.imagePremultiply, project.IsPngOptimize = img_premultiply, png_opt
+        project.imageConvertMode = Constants.IMAGE_MODE_CONVERT_NO_CONVERT
+        project.soundConvertMode = Constants.SOUND_MODE_CONVERT_TO_OGG
+        project.musicConvertMode = Constants.MUSIC_MODE_CONVERT_TO_OGG
+        project.isMakeAtlas = False
+        project.compilePython = False
+        project.platform = None
+        builder = Builder()
+        builder.initErrorHandler(Constants.ERROR_REPORTING_DEFAULT)
+        if img_premultiply or png_opt:
+            builder.addAction(BuilderActionPngOptimize())
+        builder.addAction(BuilderActionBuildResources())
+        builder.project = project
+        initialized = []
+        try:
+            Environment.setCurrentProject(project)
+            configureOperations(project)
+            pack = ResourcePack(project, name, description, str(source), str(source), str(destination))
+            if pack.initialise() is False:
+                raise RuntimeError("Cannot read resource package: " + description)
+            project.packs = {name: pack}
+            for action in builder.actions:
+                if action.initialise(builder, project) is False:
+                    raise RuntimeError("Cannot initialize resource action: " + str(action))
+                initialized.append(action)
+            if builder.buildActions() is False:
+                raise RuntimeError("Resource build failed: " + description)
+        finally:
+            for action in reversed(initialized):
+                action.finalise()
+            ErrorHandler.removeListener(builder.errorListener)
+            Environment.setCurrentProject(previous_project)
+    return True
