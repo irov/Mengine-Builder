@@ -87,7 +87,6 @@ def configureOperations(project):
     from Builder.Operation.OperationConvertImageToPVR import OperationConvertImageToPVR
     from Builder.Operation.OperationConvertImageToDDS import OperationConvertImageToDDS
     from Builder.Operation.OperationConvertMetabuf import OperationConvertMetabuf
-    from Builder.Operation.OperationCompileMengineEditorAsset import OperationCompileMengineEditorAsset
     from Builder.Operation.OperationCopyDirRecursive import OperationCopyDirRecursive
     from Builder.Operation.OperationCopyFile import OperationCopyFile
     from Builder.Operation.OperationCreateZipPack import OperationCreateZipPack
@@ -144,7 +143,6 @@ def configureOperations(project):
     OperationFactory.registerOperationType("ConvertImageToHTF", OperationConvertImageToHTF)
     OperationFactory.registerOperationType("ConvertImageToACF", OperationConvertImageToACF)
     OperationFactory.registerOperationType("ConvertMetabuf", OperationConvertMetabuf)
-    OperationFactory.registerOperationType("CompileMengineEditorAsset", OperationCompileMengineEditorAsset)
     OperationFactory.registerOperationType("CopyDirRecursive", OperationCopyDirRecursive)
     OperationFactory.registerOperationType("CopyFile", OperationCopyFile)
     OperationFactory.registerOperationType("CreateZipPack", OperationCreateZipPack)

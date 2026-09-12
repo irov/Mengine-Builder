@@ -6,16 +6,7 @@ class TagHandlerResource(TagHandler):
     def __init__(self, resourceHandlerPool):
         super(TagHandler, self).__init__()
         self.resourceHandlerPool = resourceHandlerPool
-        self.scanChildren = True
         pass
-
-    def onParams(self, pakName, node, parserContext, pool):
-        super(TagHandlerResource, self).onParams(pakName, node, parserContext, pool)
-        self.scanChildren = True
-        pass
-
-    def needToScanChildren(self):
-        return self.scanChildren
 
     def _onExecute(self):
         if self.node.hasAttribute("Skip") is True:
@@ -27,9 +18,6 @@ class TagHandlerResource(TagHandler):
             pass
 
         type = self.node.getAttribute("Type")
-        if type in ("ResourceScene", "ResourceMotion"):
-            self.scanChildren = False
-            pass
         handler = self.resourceHandlerPool.getHandler(type)
 
         if handler is None:

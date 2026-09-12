@@ -34,7 +34,6 @@ from Builder.TagHandler.ResourceHandler.ResourceHandlerParticle import ResourceH
 from Builder.TagHandler.ResourceHandler.ResourceHandlerEmitterContainer import ResourceHandlerEmitterContainer
 from Builder.TagHandler.ResourceHandler.ResourceHandlerSpine import ResourceHandlerSpine
 from Builder.TagHandler.ResourceHandler.ResourceHandlerMovie2 import ResourceHandlerMovie2
-from Builder.TagHandler.ResourceHandler.ResourceHandlerMengineEditorAsset import ResourceHandlerMengineEditorAsset
 from Builder.TagHandler.ResourceHandler.ResourceHandlerMusicConvertToOGG import ResourceHandlerMusicConvertToOGG
 from Builder.TagHandler.ResourceHandler.ResourceHandlerMusicConvertToAAC import ResourceHandlerMusicConvertToAAC
 from Builder.TagHandler.ResourceHandler.ResourceHandlerMusicConvertToMP3 import ResourceHandlerMusicConvertToMP3
@@ -80,8 +79,6 @@ class BuilderActionBuildResources(BuilderAction):
         resourcesPool.setHandler("ResourceVideo", ResourceHandlerVideo())
         resourcesPool.setHandler("ResourceSpine", ResourceHandlerSpine())
         resourcesPool.setHandler("ResourceMovie2", ResourceHandlerMovie2())
-        resourcesPool.setHandler("ResourceScene", ResourceHandlerMengineEditorAsset("scene"))
-        resourcesPool.setHandler("ResourceMotion", ResourceHandlerMengineEditorAsset("motion"))
 
         soundConvertMode = self.project.soundConvertMode
         if soundConvertMode == Constants.SOUND_MODE_CONVERT_TO_OGG:
