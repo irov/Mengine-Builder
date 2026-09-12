@@ -203,7 +203,6 @@ def build(jsonConfigContent):
     project.pathToIconGroup = jsonConfigContent.get("path_icongroup")
 
     project.isMetabuf = jsonConfigContent.get("metabuf", False)
-    project.metabufProtocolPath = jsonConfigContent.get("metabuf_protocol")
     project.isMakeAtlas = jsonConfigContent.get("make_atlas")
 
     project.imageConvertQuality = jsonConfigContent.get("img_convert_quality", project.imageConvertQuality)

@@ -41,7 +41,6 @@ class OperationConvertMetabuf(Operation):
             self.node,
             self.sourcePath,
             self.destinationPath,
-            self.project.metabufProtocolPath,
         ) is False:
             ErrorHandler.warning(
                 "invalid Metabuf conversion [%s] source [%s] destination [%s]",
