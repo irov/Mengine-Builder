@@ -115,6 +115,17 @@ leaves SDK packaging and final directory publication to its caller. The caller
 must use unpublished staging and publish it only after success. Calls in one
 process are sequential; each starts with fresh conversion and operation caches.
 
+Resource-only builds can also pass `make_atlas=True`, `atlas_max_width=1024`,
+`atlas_max_height=1024` and `atlas_rotate=False`. Existing `NoAtlas` declarations
+are respected. Atlas parents are lazily compiled (`Precompile=0`). PNGs retain
+their source dimensions. Source files are not changed.
+Apps using custom UV sampling must handle atlas bounds/rotation, and async
+loaders must prefetch the parent texture rather than a sub-image's empty content.
+Atlas parents preserve the source PMA flag. Straight-alpha and PMA images must
+use separate atlas sections (DataBlocks/tags), or `img_premultiply=True` must
+normalize the inputs before packing. Mixed sections and images too large for
+the requested page dimensions fail the build before resource export.
+
 Premultiplication needs an AlphaSpreading whose PNG reader widens RGB and
 palette inputs to RGBA; `tools-v1.0.6` is the first release that carries it.
 `MENGINE_BUILDER_TOOL_ALPHASPREADING` overrides the managed binary when a

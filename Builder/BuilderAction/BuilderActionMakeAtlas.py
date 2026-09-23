@@ -53,7 +53,7 @@ class BuilderActionMakeAtlas(BuilderAction):
         return (packDir,name)
         pass
 
-    def packResources(self, generator, resources, duplicate):
+    def packResources(self, generator, resources, duplicate, premultiply):
         for resource in resources:
             if duplicate is False and resource.isAlreadyInAtlas():
                 if resource not in self.alreadyInAtlasResources:
@@ -67,7 +67,8 @@ class BuilderActionMakeAtlas(BuilderAction):
 
             if type == "ResourceExternal":
                 resourcesExternal = resource.getImageResources()
-                self.packResources(generator, resourcesExternal, duplicate)
+                if self.packResources(generator, resourcesExternal, duplicate, premultiply) is False:
+                    return False
                 pass
             elif type == "ResourceImageDefault":
                 image = resource.getImage()
@@ -75,10 +76,16 @@ class BuilderActionMakeAtlas(BuilderAction):
                     continue
                     pass
 
+                premultiply.add(resource.isPremultiply())
+                if len(premultiply) > 1:
+                    ErrorHandler.error("Cannot mix straight-alpha and premultiplied images in one atlas section: %s; "
+                                       "enable img_premultiply or use separate DataBlocks", resource.getName())
+                    return False
+
                 generator.addImage(image)
                 pass
             pass
-        pass
+        return True
 
     def createAtlas(self, collector, pack):
         settings = PackingSettings()
@@ -107,7 +114,7 @@ class BuilderActionMakeAtlas(BuilderAction):
 
         settings.packingMode = PackingMode.OFFLINE
         settings.packingAlgorithmAbility = None
-        settings.rotateMode = RotateMode.SIDE_WAYS
+        settings.rotateMode = RotateMode.SIDE_WAYS if self.project.atlasRotate else RotateMode.NONE
 
         settings.maxWidth = self.project.atlasMaxWidth
         settings.maxHeight = self.project.atlasMaxHeight
@@ -129,7 +136,8 @@ class BuilderActionMakeAtlas(BuilderAction):
             generator.initialise(settings, atlasPathData[0], atlasPathData[1], Constants.ATLAS_TEXTURE_TYPE, Constants.ATLAS_IMAGE_TYPE, Constants.ATLAS_FILL_COLOR)
 
             items = section.getItems()
-            self.packResources(generator, items, True)
+            if self.packResources(generator, items, True, set()) is False:
+                return False
 
             if generator.generate() is False:
                 ErrorHandler.warning("invalid generate atlas [%s] path [%s]", self.__repr__(), atlasPathData)
@@ -141,6 +149,8 @@ class BuilderActionMakeAtlas(BuilderAction):
                 ErrorHandler.error("AtlasGenerator can`t  pack image %s" % waste)
                 continue
                 pass
+            if wasted:
+                return False
             pass
 
         sections = collector.getSections()
@@ -155,7 +165,8 @@ class BuilderActionMakeAtlas(BuilderAction):
             generator.initialise(settings, atlasPathData[0], atlasPathData[1], Constants.ATLAS_TEXTURE_TYPE, Constants.ATLAS_IMAGE_TYPE, Constants.ATLAS_FILL_COLOR)
 
             items = section.getItems()
-            self.packResources(generator, items, False)
+            if self.packResources(generator, items, False, set()) is False:
+                return False
 
             if generator.generate() is False:
                 ErrorHandler.warning("invalid generate atlas [%s] path [%s]", self.__repr__(), atlasPathData)
@@ -167,6 +178,8 @@ class BuilderActionMakeAtlas(BuilderAction):
                 ErrorHandler.error("AtlasGenerator can`t  pack image %s" % waste)
                 continue
                 pass
+            if wasted:
+                return False
             pass
 
         return True

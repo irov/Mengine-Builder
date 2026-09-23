@@ -60,6 +60,10 @@ class ResourceImageDefault(Resource):
         return True
         pass
 
+    def isPremultiply(self):
+        return (self.fileNode.hasAttribute("Premultiply")
+                and self.fileNode.getAttribute("Premultiply").lower() in ("1", "true"))
+
     def getFileNode(self):
         children = self.node.getChildren()
         for child in children:
@@ -314,17 +318,19 @@ class ResourceImageDefault(Resource):
         atlasNode.setAttribute("Name", ResourceATLASName)
         atlasNode.setAttribute("Type", "ResourceImageDefault")
         atlasNode.setAttribute("Unique", "0")
+        project = Environment.getCurrentProject()
+        if project.atlasPrecompile is False:
+            atlasNode.setAttribute("Precompile", "0")
 
         atlasFileNode = atlasNode.createChildren("File")
         atlasFileNode.setAttribute("Path", atlas.fileName)
         atlasFileNode.setAttribute("__IsAtlas", "1")
         atlasFileNode.setAttribute("__Dir", atlas.getFileName())
         atlasFileNode.setAttribute("Codec", "pngImage")
+        atlasFileNode.setAttribute("Alpha", "1" if atlas.textureMode == "RGBA" else "0")
         atlasFileNode.setAttribute("NoConvert", "0")
 
-        project = Environment.getCurrentProject()
-
-        if project.imagePremultiply is True:
+        if self.isPremultiply():
             atlasFileNode.setAttribute("Premultiply", "1")
             pass
 

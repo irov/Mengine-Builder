@@ -272,12 +272,13 @@ def build(jsonConfigContent):
 
 
 def build_resource_pack(source_dir, destination_dir, *, description="Package.xml", name="Resources",
-                        img_premultiply=False, png_opt=False):
+                        img_premultiply=False, png_opt=False, make_atlas=False,
+                        atlas_max_width=1024, atlas_max_height=1024, atlas_rotate=False):
     """Run the normal PNG and resource-export actions into unpublished staging.
 
     This entry point leaves application/SDK packaging to the caller. It exports
     an image/script resource pack with PNGs retained as PNGs. The full build()
-    pipeline additionally supports atlases, resizing and format conversion.
+    pipeline additionally supports resizing and format conversion.
     """
     from pathlib import Path
     import tempfile
@@ -287,6 +288,7 @@ def build_resource_pack(source_dir, destination_dir, *, description="Package.xml
     from Builder.Toolchain import tool_path
     from Builder.BuilderAction.BuilderActionPngOptimize import BuilderActionPngOptimize
     from Builder.BuilderAction.BuilderActionBuildResources import BuilderActionBuildResources
+    from Builder.BuilderAction.BuilderActionMakeAtlas import BuilderActionMakeAtlas
 
     source, destination = Path(source_dir).resolve(), Path(destination_dir).resolve()
     if source.is_relative_to(destination) or destination.is_relative_to(source):
@@ -295,6 +297,11 @@ def build_resource_pack(source_dir, destination_dir, *, description="Package.xml
         raise ValueError("Missing resource package: " + str(source / description))
     if type(img_premultiply) is not bool or type(png_opt) is not bool:
         raise ValueError("img_premultiply and png_opt must be booleans")
+    if type(make_atlas) is not bool or type(atlas_rotate) is not bool:
+        raise ValueError("make_atlas and atlas_rotate must be booleans")
+    for extent in (atlas_max_width, atlas_max_height):
+        if type(extent) is not int or extent < 64 or extent > 8192 or extent & (extent - 1):
+            raise ValueError("Atlas dimensions must be powers of two between 64 and 8192")
     if img_premultiply or png_opt:
         tool_path("AlphaSpreading")
 
@@ -307,13 +314,19 @@ def build_resource_pack(source_dir, destination_dir, *, description="Package.xml
         project.imageConvertMode = Constants.IMAGE_MODE_CONVERT_NO_CONVERT
         project.soundConvertMode = Constants.SOUND_MODE_CONVERT_TO_OGG
         project.musicConvertMode = Constants.MUSIC_MODE_CONVERT_TO_OGG
-        project.isMakeAtlas = False
+        project.isMakeAtlas = make_atlas
+        project.atlasMaxWidth, project.atlasMaxHeight = atlas_max_width, atlas_max_height
+        project.atlasRotate = atlas_rotate
+        project.atlasPrecompile = False
+        project.findMinimalAtlasSize = True
         project.compilePython = False
         project.platform = None
         builder = Builder()
         builder.initErrorHandler(Constants.ERROR_REPORTING_DEFAULT)
         if img_premultiply or png_opt:
             builder.addAction(BuilderActionPngOptimize())
+        if make_atlas:
+            builder.addAction(BuilderActionMakeAtlas())
         builder.addAction(BuilderActionBuildResources())
         builder.project = project
         initialized = []

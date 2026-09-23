@@ -33,7 +33,9 @@ class GraphRootJson(GraphRoot):
         return child
 
     def _onVisit(self, tagHandlerPool):
-        rootNode = GraphNodeJson(None, self.documentJson)
+        # JSON omits the XML root tag, but handlers still need its scope
+        # (for example DataBlock opens and closes an atlas section).
+        rootNode = GraphNodeJson(None, {self.metabufNode: self.documentJson})
 
         if self.walk(rootNode, tagHandlerPool) is False:
             ErrorHandler.warning("invalid walk [%s] [%s]" % (self.__repr__(), rootNode))

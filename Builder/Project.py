@@ -60,6 +60,8 @@ class Project(object):
         self.atlasMaxWidth = None
         self.atlasMaxHeight = None
         self.atlasSquare = False
+        self.atlasRotate = True
+        self.atlasPrecompile = True
         self.findMinimalAtlasSize = None
         self.logDir = None
         self.secureValue = None
