@@ -70,7 +70,6 @@ immutable release asset and a reviewed manifest change with its SHA-256.
 ## System and licensed tools
 
 - Windows `rc.exe` is found on `PATH` or through the installed Windows SDK.
-- Windows Python 2 bytecode compilation uses `py -2`.
 - `PVRTexToolCLI` is not redistributed. Install the Imagination PowerVR SDK
   and add the command to `PATH`, or set
   `MENGINE_BUILDER_TOOL_PVRTEXTOOLCLI` when a PVRTC build requests it.
@@ -84,6 +83,27 @@ macOS supports Apple Silicon `arm64`. Windows supports x64. The DX11 shader
 converters `text2vso11` and `text2pso11` remain Windows-only; resource
 rewriting removes obsolete DX9 shader converters and unsupported platform
 artifacts.
+
+## Script bytecode compilation
+
+With `python_compile: true`, scripts are compiled by the native Mengine
+`PythonCompiler` on both Windows x64 and macOS arm64. No Python 2 interpreter
+is required. The compiler uses TinyPy with optimize level 1, preprocessing,
+`_DEVELOPMENT` debug-branch removal, and `meta` expansion. It writes Python 2.7
+compatible `.pyo` files, which Builder compresses into the existing `.pyz`
+format. With `python_compile: false`, Builder copies Python sources.
+
+Builder installs `PythonCompiler` automatically from the pinned `tools-v1.0.7`
+release. For a local compiler build, set `MENGINE_BUILDER_TOOL_PYTHONCOMPILER`
+to its executable. Resource compilation always uses optimize level 1.
+Runtime `compile`/`exec` in Mengine uses optimize level 0
+in Debug and 1 in Release, with `meta` enabled and `_DEVELOPMENT` branches
+removed in Release.
+
+The Mengine tools release workflow builds the current TinyPy source from its
+remote and records the exact commit in build provenance. After publishing,
+apply the actual package version, platform metadata and compiler mappings from
+the release's `manifest-fragment.json` to this manifest.
 
 ## PNG premultiplication and resource-only builds
 

@@ -12,7 +12,8 @@ metadata. The relevant upstream projects are:
 - WebP `cwebp`: https://chromium.googlesource.com/webm/libwebp/
 - crunch: https://github.com/BinomialLLC/crunch
 - yamdi: https://github.com/ioppermann/yamdi
-- CPython 2.7.18: https://www.python.org/downloads/release/python-2718/
+- TinyPy compiler: https://github.com/irov/tinypy (includes CPython-derived
+  components under the PSF license; notices ship with the native tools)
 - Resource Hacker: https://www.angusj.com/resourcehacker/
 
 PVRTexToolCLI is separately licensed by Imagination Technologies and is never

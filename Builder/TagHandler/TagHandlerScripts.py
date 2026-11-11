@@ -37,7 +37,7 @@ class TagHandlerScripts(TagHandler):
                 fileDestiny_pyz = FileSystem.setFileExtension(fileDestiny, "pyz")
                 with OperationManager.runOperationChain() as oc:
                     oc.addOperation("CopyFile", SourcePath=fileSource, DestinationPath=fileDestiny, Doc="TagHandlerScripts")
-                    oc.addOperation("CompilePyFile", SourcePath=fileDestiny)
+                    oc.addOperation("CompilePyFile", SourcePath=fileDestiny, DestinationPath=fileDestiny_pyo)
                     oc.addOperation("RemoveFile", SourcePath=fileDestiny)
                     oc.addOperation("CompressPyoFile", SourcePath=fileDestiny_pyo, DestinationPath=fileDestiny_pyz)
                     pass

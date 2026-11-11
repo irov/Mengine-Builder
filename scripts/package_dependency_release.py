@@ -50,7 +50,6 @@ PACKAGE_SPECS = (
     ("crunch-macos-arm64.tar.gz", "macos/tools/crunch", "tar.gz", ("crunch.txt",), "crunch 3.6 arm64"),
     ("yamdi-windows-x64.zip", "win32/tools/yamdi", "zip", ("yamdi.txt",), "yamdi 1.9"),
     ("yamdi-macos-arm64.tar.gz", "macos/tools/yamdi", "tar.gz", ("yamdi.txt",), "yamdi 1.9 arm64"),
-    ("python27-macos-arm64.tar.gz", "macos/tools/python2.7", "tar.gz", (), "CPython 2.7.18 minimal relocatable arm64 runtime"),
 )
 
 
@@ -161,9 +160,6 @@ def package(source_root, output_root):
                 copy_tree(source, staging)
                 notices = staging / "LICENSES"
                 notices.mkdir()
-
-                if output_name.startswith("python27-"):
-                    shutil.copy2(source / "LICENSE.txt", notices / "Python-2.7.txt")
 
                 for name in license_names:
                     shutil.copy2(licenses[name], notices / name)

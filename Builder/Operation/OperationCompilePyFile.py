@@ -6,7 +6,7 @@ from Builder import Compile
 class OperationCompilePyFile(Operation):
     def _onParams( self, params ):
         self.sourcePath = params.pop("SourcePath")
-        # self.destinationPath = params.pop("DestinationPath")
+        self.destinationPath = params.pop("DestinationPath")
         pass
 
     def _getInfo(self):
@@ -14,8 +14,8 @@ class OperationCompilePyFile(Operation):
         pass
 
     def _onRun(self):
-        if Compile.compile27(self.sourcePath) is False:
-            ErrorHandler.warning("invalid compile27 [%s]", self.__repr__())
+        if Compile.compile_python(self.sourcePath, self.destinationPath) is False:
+            ErrorHandler.warning("invalid PythonCompiler [%s]", self.__repr__())
 
             return False
             pass
