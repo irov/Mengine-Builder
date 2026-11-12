@@ -93,7 +93,7 @@ is required. The compiler uses TinyPy with optimize level 1, preprocessing,
 compatible `.pyo` files, which Builder compresses into the existing `.pyz`
 format. With `python_compile: false`, Builder copies Python sources.
 
-Builder installs `PythonCompiler` automatically from the pinned `tools-v1.0.7`
+Builder installs `PythonCompiler` automatically from the pinned `tools-v1.0.8`
 release. For a local compiler build, set `MENGINE_BUILDER_TOOL_PYTHONCOMPILER`
 to its executable. Resource compilation always uses optimize level 1.
 Runtime `compile`/`exec` in Mengine uses optimize level 0

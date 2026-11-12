@@ -2,11 +2,11 @@
   "schema_version": 1,
   "packages": {
     "mengine-tools": {
-      "version": "tools-v1.0.7",
+      "version": "tools-v1.0.8",
       "platforms": {
         "windows-x64": {
-          "url": "https://github.com/irov/Mengine/releases/download/tools-v1.0.7/mengine-tools-windows-x64.zip",
-          "sha256": "fc693f5c36c3ef2d7f500f10172a887710a6516019b3e7015bf16569bbdd2fe7",
+          "url": "https://github.com/irov/Mengine/releases/download/tools-v1.0.8/mengine-tools-windows-x64.zip",
+          "sha256": "0f00ccaaea4f82546f682dc00f5afcd185718f780a14baf89313b42a7ce85338",
           "archive": "zip",
           "files": [
             "AlphaPremultiplier.exe",
@@ -28,8 +28,8 @@
           "executables": []
         },
         "macos-arm64": {
-          "url": "https://github.com/irov/Mengine/releases/download/tools-v1.0.7/mengine-tools-macos-arm64.tar.gz",
-          "sha256": "4512e9df20800ff3e1dc31d3f42e1548a7af353a8fceb3df788dad2f74ca85ec",
+          "url": "https://github.com/irov/Mengine/releases/download/tools-v1.0.8/mengine-tools-macos-arm64.tar.gz",
+          "sha256": "5c20a0d641bc9958ddca44d63db4c4b2e9779d7c4f2d7e0afd46ae68b5c7912a",
           "archive": "tar.gz",
           "files": [
             "AlphaPremultiplier",
