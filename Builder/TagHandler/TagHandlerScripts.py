@@ -51,6 +51,7 @@ class TagHandlerScripts(TagHandler):
             extension = FileSystem.getFileExtension(fileSource)
             if extension == "py":
                 with OperationManager.runOperationChain() as oc:
+                    oc.addOperation("ValidatePyFile", SourcePath=fileSource)
                     oc.addOperation("CopyFile", SourcePath=fileSource, DestinationPath=fileDestiny, Doc="TagHandlerScripts")
                     pass
                 pass

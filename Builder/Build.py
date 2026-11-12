@@ -70,6 +70,7 @@ def configureOperations(project):
     OperationFactory.setProject(project)
 
     from Builder.Operation.OperationCompilePyFile import OperationCompilePyFile
+    from Builder.Operation.OperationValidatePyFile import OperationValidatePyFile
     from Builder.Operation.OperationConvertFFMPEGtoOGG import OperationConvertFFMPEGtoOGG
     from Builder.Operation.OperationConvertFFMPEGtoAAC import OperationConvertFFMPEGtoAAC
     from Builder.Operation.OperationConvertFFMPEGtoWAV import OperationConvertFFMPEGtoWAV
@@ -122,6 +123,7 @@ def configureOperations(project):
     from Builder.Operation.OperationAstralaxParse import OperationAstralaxParse
 
     OperationFactory.registerOperationType("CompilePyFile", OperationCompilePyFile)
+    OperationFactory.registerOperationType("ValidatePyFile", OperationValidatePyFile)
     OperationFactory.registerOperationType("CompressPyoFile", OperationCompressPyoFile)
     OperationFactory.registerOperationType("ZipDDSFile", OperationZipDDSFile)
     OperationFactory.registerOperationType("ConvertFFMPEGtoOGG", OperationConvertFFMPEGtoOGG)

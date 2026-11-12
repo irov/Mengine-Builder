@@ -2,14 +2,21 @@ from Builder.Error.ErrorHandler import ErrorHandler
 from Builder.OSSystem import OSSystem
 
 
-def compile_python(source, destination):
-    status, out, err = OSSystem.run_tool(
-        "PythonCompiler", ["--in", source, "--out", destination]
-    )
+def _run_python_compiler(arguments):
+    status, out, err = OSSystem.run_tool("PythonCompiler", arguments)
 
     if status is False:
         ErrorHandler.error(
-            "[Compile] TinyPy compile file: %s out: %s error: %s" % (source, out, err)
+            "[PythonCompiler] arguments: %s\nstdout: %s\nstderr: %s",
+            arguments, out, err,
         )
 
     return status
+
+
+def compile_python(source, destination):
+    return _run_python_compiler(["--in", source, "--out", destination])
+
+
+def validate_python(source):
+    return _run_python_compiler(["--in", source, "--validate"])

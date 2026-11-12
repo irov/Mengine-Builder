@@ -135,7 +135,7 @@ class BuilderConsoleApp(object):
         self.addArgument(ArgumentBool("no_exe", "no exe", important=False, default=False))
         self.addArgument(ArgumentBool("only_exe", "no exe", important=False, default=False))
         self.addArgument(ArgumentString("zipout", "Output zip path", important=False, default=None))
-        self.addArgument(ArgumentString("python_compile", "Compile python code", important=False, default=True))
+        self.addArgument(ArgumentString("python_compile", "Compile Python bytecode; false validates and copies source", important=False, default=True))
         pass
 
     def run(self, *args):

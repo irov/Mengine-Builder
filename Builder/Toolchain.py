@@ -109,10 +109,7 @@ def converter_supported(name):
 
 
 def required_tools_for_config(config):
-    required = set()
-
-    if config.get("python_compile", True) is True:
-        required.add("PythonCompiler")
+    required = {"PythonCompiler"}
 
     if config.get("metabuf") is True:
         required.add("Metawrite")
