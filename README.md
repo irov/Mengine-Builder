@@ -89,23 +89,22 @@ artifacts.
 With `python_compile: true`, scripts are compiled by the native Mengine
 `PythonCompiler` on both Windows x64 and macOS arm64. No Python 2 interpreter
 is required. The compiler uses TinyPy with optimize level 1, preprocessing,
-`_DEVELOPMENT` debug-branch removal, and `@meta.*` expansion. It writes Python 2.7
-compatible `.pyo` files, which Builder compresses into the existing `.pyz`
-format.
+the explicit build constant `_DEVELOPMENT=False`, and `@meta.*` expansion.
+It writes Python 2.7 compatible `.pyo` files, which Builder compresses into
+the existing `.pyz` format.
 
 With `python_compile: false`, Builder first validates every Python source with
 `PythonCompiler --in <script.py> --validate`, then copies the original `.py`.
-Validation uses the runtime Debug profile: optimize level 0, preprocessing,
-`@meta.*` expansion and enabled `_DEVELOPMENT` branches. It neither executes the
-script nor writes bytecode. A validation error stops the build before that
-script is copied.
+Validation uses optimize level 0, preprocessing and `@meta.*` expansion.
+No build constants are supplied, so `_DEVELOPMENT` remains a runtime name.
+Validation neither executes the script nor writes bytecode. A validation
+error stops the build before that script is copied.
 
-Builder installs `PythonCompiler` automatically from the pinned `tools-v1.0.9`
+Builder installs `PythonCompiler` automatically from the pinned `tools-v1.0.10`
 release. For a local compiler build, set `MENGINE_BUILDER_TOOL_PYTHONCOMPILER`
 to its executable. Bytecode compilation uses optimize level 1.
-Runtime `compile`/`exec` in Mengine uses optimize level 0
-in Debug and 1 in Release, with `@meta.*` enabled and `_DEVELOPMENT` branches
-removed in Release.
+Builder's offline build constants are configured independently of runtime
+`compile`/`exec` in Mengine.
 
 The Mengine tools release workflow builds the current TinyPy source from its
 remote and records the exact commit in build provenance. After publishing,

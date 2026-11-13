@@ -15,7 +15,7 @@ def _run_python_compiler(arguments):
 
 
 def compile_python(source, destination):
-    return _run_python_compiler(["--in", source, "--out", destination])
+    return _run_python_compiler(["--in", source, "--out", destination, "-D_DEVELOPMENT=False"])
 
 
 def validate_python(source):
